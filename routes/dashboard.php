@@ -7,7 +7,8 @@ use App\Http\Controllers\Dashboard\WorkController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\SubscriptionController; 
 use App\Http\Controllers\Dashboard\EarningController; 
-use App\Http\Controllers\Dashboard\WithdrawalController; 
+use App\Http\Controllers\Dashboard\WithdrawalController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes 

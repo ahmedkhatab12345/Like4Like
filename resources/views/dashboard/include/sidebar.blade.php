@@ -118,7 +118,7 @@
 
 </li>
 <li>
-<a class="m-link" href="">
+<a class="m-link" href="{{route('website.index')}}">
 <span class="ms-2">زياره الموقع</span>
 </a>
 </li>
