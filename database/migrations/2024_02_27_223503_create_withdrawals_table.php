@@ -16,7 +16,6 @@ return new class extends Migration
         $table->unsignedBigInteger('customer_id');
         $table->string('phone_number');
         $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-        $table->decimal('total_earnings', 10, 2);
         $table->decimal('withdrawal_amount', 10, 2);
         $table->enum('status', ['pending', 'accept', 'rejected'])->default('pending');
         $table->enum('methoud', ['cach', 'insta']);

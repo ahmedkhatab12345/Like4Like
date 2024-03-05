@@ -28,29 +28,22 @@ class WithdrawalController extends Controller
         return view('dashboard.withdrawals.rejected_withdrawals',compact('withdrawals'));
     }
 
-
-    public function update(Request $request)
-{
-    $withdrawal = Withdrawal::findOrFail($request->withdrawal_id);
-
-    if ($request->hasFile('photo')) {
-        $file_name = $this->saveImage($request->photo, 'images/dashboard/withdrawals');
-        $withdrawal->update([
-            'status' => 'accept',
-            'photo' => $file_name,
-        ]);
-    } else {
-        $withdrawal->update(['status' => 'accept']);
-    }
-
-    return response()->json(['message' => 'تم تحديث حالة السحب إلى "موافقة" بنجاح']);
-}
-
-
-    public function reject(Withdrawal $withdrawal)
+    public function update(Request $request, $id)
     {
+    $withdrawal = Withdrawal::findOrFail($id);
+    
+    if ($request->has('accepted')) {
+        $withdrawal->update(['status' => 'accepted']);
+    } elseif ($request->has('rejected')) {
         $withdrawal->update(['status' => 'rejected']);
-
-        return response()->json(['message' => 'تم تحديث حالة السحب إلى "رفض" بنجاح']);
     }
+    
+    if ($request->hasFile('photo')) {
+        $file_name = $this->saveImage($request->file('photo'), 'images/site/withdrawals');
+        $withdrawal->update(['photo' => $file_name]);
+    }
+
+    return redirect()->back()->with('success', 'تم تحديث حالة السحب بنجاح.');
+    }
+    
 }

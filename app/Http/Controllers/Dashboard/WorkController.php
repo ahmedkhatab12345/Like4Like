@@ -49,20 +49,6 @@ class WorkController extends Controller
         return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة العمل: ' . $e->getMessage())->withInput();
     }
 
-    try {
-        $file_name = $this->saveImage($request->photo, 'images/dashboard/works');
-        //fetch data
-        $works = $request->all();
-        //store data
-        $works = Menu::create([              
-            'description'=> $works['description'],
-            'link'=> $works['link'],
-            'photo' => $file_name,
-        ]);
-        return redirect()->route('works.index')->with('success', 'Menu added successfully.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error adding Menu: ' . $e->getMessage())->withInput();
-        }
 }
 
 

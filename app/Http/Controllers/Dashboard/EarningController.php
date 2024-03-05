@@ -4,23 +4,22 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use ConsoleTVs\Charts\Facades\Charts;
 use App\Models\Earning;
-use LaravelDaily\LaravelCharts\Classes\LaravelChart;
-
 class EarningController extends Controller
 {
-    
     public function index(){
-        $chart_options = [
-            'chart_title' => 'Earning by day',
-            'report_type' => 'group_by_date',
-            'model' => 'App\Models\Earning',
-            'group_by_field' => 'created_at',
-            'group_by_period' => 'day',
-            'chart_type' => 'bar',
-        ];
-        $chart1 = new LaravelChart($chart_options);
-        
-        return view('dashboard.earnings.index', compact('chart1'));
+        $earnings = Earning::whereDate('date', today())->get(); // استعلام لجلب الأرباح اليومية
+        $profitData = $earnings->pluck('daily_earning', 'date'); // جمع الأرباح مع التاريخ
+
+        $chart = Charts::create('line', 'highcharts')
+            ->title('Daily Profits')
+            ->elementLabel('Profit')
+            ->labels($profitData->keys())
+            ->values($profitData->values())
+            ->dimensions(1000, 500)
+            ->responsive(true);
+
+        return view('dashboard.earnings.index', ['chart' => $chart]);
     }
 }

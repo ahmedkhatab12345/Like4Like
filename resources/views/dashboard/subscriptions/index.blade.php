@@ -24,7 +24,7 @@
                                                     <li class="list-group-item"><strong class="text-info">Phone_Number :</strong> {{ $subscription->phone_number }}</li>
                                                     <li class="list-group-item"><strong class="text-success">Subscription_Start_Date :</strong> {{ $subscription->created_at }}</li>
                                                     <li class="list-group-item"><strong class="text-danger">Subscription_End_Date :</strong> {{ $subscription->Subscription_End_Date }}</li>
-                                                    <li class="list-group-item"><strong class="text-success">Verification_Image :</strong> <img  style="width: 266px; height: 220px;" src=""></li> 
+                                                    <li class="list-group-item"><strong class="text-success">Verification_Image :</strong> <img  style="width: 266px; height: 220px;" src="{{asset('images/dashboard/subscriptions/'.$subscription->photo)}}"></li> 
                                                 </ul>
                                             </div>
 

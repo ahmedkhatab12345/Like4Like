@@ -12,6 +12,7 @@ class Customer extends Model
         'name',
         'email',
         'password',
-        'photo',
+        'photo', 
+        'total_earning',
     ];
 }

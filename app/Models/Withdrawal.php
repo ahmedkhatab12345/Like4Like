@@ -12,7 +12,6 @@ class Withdrawal extends Model
     protected $fillable = [
         'customer_id',
         'phone_number',
-        'total_earnings',
         'withdrawal_amount',
         'status',
         'methoud',

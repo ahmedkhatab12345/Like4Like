@@ -38,28 +38,38 @@ class SiteController extends Controller
     }
 
     public function storeSubscription(Request $request)
-    {
-        if ($request->has('vcash')) {
-            // Process Vodafone Cash subscription
-            $subscription = new Subscription();
-            $subscription->phone_number = $request->phone_number;
-            // $subscription->photo = $request->photo;
-            $subscription->photo = $this ->saveImage($request->photo,'images/dashboard/admins');
-            $subscription->status = $request->status;
-            $subscription->method = 'vcash'; // تخزين طريقة الدفع
-            $subscription->save();
-        } elseif ($request->has('ipa')) {
-            // Process Insta Pay subscription
-            $subscription = new Subscription();
-            $subscription->insta_link = $request->insta_link;
-            $subscription->photo = $this ->saveImage($request->photo,'images/dashboard/admins');
-            $subscription->status = $request->status;
-            $subscription->method = 'ipa'; // تخزين طريقة الدفع
-            $subscription->save();
+{
+    // التحقق مما إذا كانت هناك بيانات للطلبات vcash أو ipa
+    if ($request->has('payment_method') && ($request->payment_method === 'vcash' || $request->payment_method === 'ipa')) {
+        // التحقق مما إذا كانت هناك ملف صورة مرفق مع الطلب
+        if ($request->hasFile('photo')) {
+            $file_name = $this->saveImage($request->file('photo'), 'images/dashboard/subscriptions');
         }
 
-        return redirect()->route('website.index');
+        // الحصول على بيانات الاشتراكات من الطلب
+        $subscriptions_data = [
+            'phone_number' => $request->phone_number,
+        ];
+
+        // تحديد طريقة الدفع بناءً على قيمة payment_method في الطلب
+        $method = $request->payment_method;
+
+        // إنشاء سجل اشتراك جديد
+        $subscriptions = Subscription::create([
+            'phone_number' => $subscriptions_data['phone_number'],
+            'method' => $method,
+            'photo' => $file_name ?? null, // تعيين اسم الملف إذا كان موجودًا، وإلا فإنه يتم تعيينه إلى قيمة null
+        ]);
+
+        // إعادة توجيه المستخدم إلى الصفحة الرئيسية مع رسالة نجاح
+        return redirect()->route('website.index')->with('success', 'تم الاشتراك بنجاح.');
     }
+
+    // إذا لم تتوفر بيانات الدفع المطلوبة، يتم إعادة توجيه المستخدم إلى الصفحة الرئيسية مع رسالة خطأ
+    return redirect()->route('website.index')->with('error', 'يرجى اختيار طريقة دفع صحيحة.');
+}
+
+
     // public function subscription(Request $request){
     //     $user = new Subscription();
     //     $user->phone_number = $request-> phone_number;

@@ -20,8 +20,7 @@ Route::get('web-site', [SiteController::class, 'index'])->name('website.index');
 Route::get('help', [SiteController::class, 'help'])->name('help');
 // Payment
 Route::get('subscription', [SiteController::class, 'subscription'])->name('subscription');
-Route::post('subscription', [SiteController::class, 'storeSubscription'])->name('storeSubscription');
-
+Route::post('store-subscription', [SiteController::class, 'storeSubscription'])->name('storeSubscription');
 
 Route::get('/ipa', function () {
     return view('webSite.selected.ipa' );

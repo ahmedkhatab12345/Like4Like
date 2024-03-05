@@ -41,11 +41,11 @@ Route::middleware(['auth'])->group(function () {
     //End Route Of earnings
 
     //Start Route Of withdrawals 
-    Route::resource('withdrawals', WithdrawalController::class);
+    Route::get('withdrawals', [WithdrawalController::class, 'index'])->name('withdrawals.index');
     Route::get('accepted-withdrawals', [WithdrawalController::class, 'accepted_withdrawals'])->name('accepted.withdrawals');
     Route::get('rejected-withdrawals', [WithdrawalController::class, 'rejected_withdrawals'])->name('rejected.withdrawals');
-    Route::put('/withdrawals/{withdrawal}', [WithdrawalController::class, 'approve'])->name('withdrawals.approve');
-    Route::put('/withdrawals/{withdrawal}', [WithdrawalController::class, 'reject'])->name('withdrawals.reject');
+    Route::put('withdrawals/{withdrawal}/update', [WithdrawalController::class, 'update'])->name('withdrawals.update');
+
 
 });
 
