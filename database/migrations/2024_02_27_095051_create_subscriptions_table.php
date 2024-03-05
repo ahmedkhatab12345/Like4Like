@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('photo');
             $table->unsignedBigInteger('customer_id');
             $table->enum('status', ['pending', 'active', 'cancelled'])->default('pending');
+            $table->enum('method', ['vcash', 'ipa']);
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->dateTime('Subscription_End_Date')->nullable();
             $table->timestamps();

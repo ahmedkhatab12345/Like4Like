@@ -11,27 +11,27 @@ function handelClick(type){
 
 }
 
-document.getElementById("moveButton").addEventListener("click", function() {
-    var listBox = document.getElementById("myListbox");
-    var selectedValue = listBox.options[listBox.selectedIndex].value;
-  
-    // تحديد الصفحة المختارة وتوجيه المستخدم إليها
-    switch(selectedValue) {
-      case "Bank":
-        window.location.href = "Bank.html";
-        break;
-      case "vcash":
-        window.location.href = "vcash.html";
-        break;
-      case "ipa":
-        window.location.href = "ipa.html";
-        break;
-      default:
-        // إفتراضي: توجيه المستخدم لصفحة افتراضية في حالة عدم اختيار أي صفحة
-        window.location.href = "Bank.html";
-        break;
-    }
-  });
+// document.getElementById("moveButton").addEventListener("click", function() {
+//     var listBox = document.getElementById("myListbox");
+//     var selectedValue = listBox.options[listBox.selectedIndex].value;
+
+//     // تحديد الصفحة المختارة وتوجيه المستخدم إليها
+//     switch(selectedValue) {
+//     //   case "Bank":
+//     //     window.location.href = "/bank";
+//     //     break;
+//       case "vcash":
+//         window.location.href = "/vcash";
+//         break;
+//       case "ipa":
+//         window.location.href = "/ipa";
+//         break;
+//       default:
+//         // إفتراضي: توجيه المستخدم لصفحة افتراضية في حالة عدم اختيار أي صفحة
+//         window.location.href = "Bank.html";
+//         break;
+//     }
+//   });
 
 document.getElementById("imageBox").addEventListener("click", function() {
   document.getElementById("imageInput").click();

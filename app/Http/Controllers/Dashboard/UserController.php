@@ -6,7 +6,9 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Traits\UploadTrait;
 use File;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
 class UserController extends Controller
 {
     use UploadTrait;
@@ -32,7 +34,7 @@ class UserController extends Controller
             //hash password
             $hashedPassword = Hash::make($admins['password']);
             //store data
-            $admins = User::create([              
+            $admins = User::create([
                 'name'=> $admins['name'],
                 'email'=> $admins['email'],
                 'password'=> $hashedPassword ,
@@ -55,10 +57,10 @@ class UserController extends Controller
     }
 
     public function update(UserRequest $request,$id){
-        
+
         try {
             $users = User::find($id);
-        
+
             if (!$users) {
                 return redirect()->route('users.index')->with('error', 'User not found');
             }
@@ -69,13 +71,13 @@ class UserController extends Controller
                 'email' => $request->email,
                 'role' => $request->role,
             ]);
-        
+
             return redirect()->route('users.index')->with('success', 'User updated successfully');
         } catch (\Exception $e) {
 
             return redirect()->route('users.index')->with('error', 'Error updating User: ' . $e->getMessage())->withInput();
         }
-        
+
     }
 
     public function destroy ($id){
@@ -93,37 +95,37 @@ class UserController extends Controller
     }
 
     public function profileUpdate(UserRequest $request){
-        
+
         try {
             $users=User::Find(Auth::user()->id);
-        
+
             if (!$users) {
                 return redirect()->route('dashboard.index')->with('error', 'user not found');
             }
             // Check if the request has an image
             if ($request->hasFile('photo')) {
-            
+
                 // Save the new image
                 $file_name = $this->saveImage($request->photo, 'images/dashboard/admins');
-        
+
                 // Update the movie with the new image
                 $users->update([
                     'photo' => $file_name
                 ]);
             }
-        
+
             // Update other data
             $users->update([
                 'title' => $request->title,
                 'description' => $request->description,
             ]);
-        
+
             return redirect()->route('dashboard.index')->with('success', 'Data updated successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error updating Data: ' . $e->getMessage())->withInput();
         }
-        
+
     }
 
-  
+
 }
