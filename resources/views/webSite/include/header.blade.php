@@ -24,7 +24,7 @@
               aria-current="page" href="#">|</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active fs-5" aria-current="page" href="{{route('profits.index')}}">سحب الارباح</a>
+            <a class="nav-link active fs-5" aria-current="page" href="{{route('withdrawal.index')}}">سحب الارباح</a>
           </li>
           <li class="nav-item d-lg-block d-none">
             <a class="nav-link active fs-5 ms-2 me-2" style="color: rgb(209, 209, 209); cursor: auto"

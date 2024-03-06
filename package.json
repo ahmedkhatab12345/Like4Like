@@ -16,6 +16,7 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
+        "dropify": "^0.2.2",
         "sweetalert2": "^11.10.5",
         "toastr": "^2.1.4"
     }

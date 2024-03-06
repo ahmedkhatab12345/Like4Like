@@ -13,10 +13,7 @@ use File;
 class SiteController extends Controller
 {
     use UploadTrait;
-    // public function index(){
-    //     return view('webSite.index');
-    // }
-
+    
     public function index()
     {
         $works = Work::where('created_at', '>=', Carbon::now()->subDay())
@@ -32,43 +29,32 @@ class SiteController extends Controller
 
 
 
-    public function subscription()
-    {
-        return view('webSite.payment');
-    }
 
-    public function storeSubscription(Request $request)
-{
-    // التحقق مما إذا كانت هناك بيانات للطلبات vcash أو ipa
-    if ($request->has('payment_method') && ($request->payment_method === 'vcash' || $request->payment_method === 'ipa')) {
-        // التحقق مما إذا كانت هناك ملف صورة مرفق مع الطلب
-        if ($request->hasFile('photo')) {
-            $file_name = $this->saveImage($request->file('photo'), 'images/dashboard/subscriptions');
-        }
 
-        // الحصول على بيانات الاشتراكات من الطلب
-        $subscriptions_data = [
-            'phone_number' => $request->phone_number,
-        ];
 
-        // تحديد طريقة الدفع بناءً على قيمة payment_method في الطلب
-        $method = $request->payment_method;
 
-        // إنشاء سجل اشتراك جديد
-        $subscriptions = Subscription::create([
-            'phone_number' => $subscriptions_data['phone_number'],
-            'method' => $method,
-            'photo' => $file_name ?? null, // تعيين اسم الملف إذا كان موجودًا، وإلا فإنه يتم تعيينه إلى قيمة null
-        ]);
+// public function storeSubscription(Request $request)
+// {
+//     if ($request->payment_method === 'vcash') {
+//         // Process Vodafone Cash subscription
+//         $subscription = new Subscription();
+//         $subscription->phone_number = $request->phone_number;
+//         if ($request->hasFile('photo')) {
+//             $file_name = $this->saveImage($request->file('vcash_photo'), 'images/dashboard/subscriptions');
+//         }
+//         $subscription->method = 'vcash'; // تخزين طريقة الدفع
+//         $subscription->save();
+//     } elseif ($request->payment_method === 'ipa') {
+//         // Process Insta Pay subscription
+//         $subscription = new Subscription();
+//         $subscription->phone_number = $request->phone_number;
+//         $file_name = $this->saveImage($request->file('ipa_photo'), 'images/dashboard/subscriptions');
+//         $subscription->method = 'ipa';  // تخزين طريقة الدفع
+//         $subscription->save();
+//     }
 
-        // إعادة توجيه المستخدم إلى الصفحة الرئيسية مع رسالة نجاح
-        return redirect()->route('website.index')->with('success', 'تم الاشتراك بنجاح.');
-    }
-
-    // إذا لم تتوفر بيانات الدفع المطلوبة، يتم إعادة توجيه المستخدم إلى الصفحة الرئيسية مع رسالة خطأ
-    return redirect()->route('website.index')->with('error', 'يرجى اختيار طريقة دفع صحيحة.');
-}
-
+//     return redirect()->route('website.index');
+// }
 
     // public function subscription(Request $request){
     //     $user = new Subscription();
@@ -81,4 +67,31 @@ class SiteController extends Controller
     //     return redirect()->route("website.index");
     // }
 
+
+    // public function storeSubscription(Request $request)
+    // {
+    //     if ($request->payment_method === 'vcash') {
+    //         // Process Vodafone Cash subscription
+    //         $subscription = new Subscription();
+    //         $subscription->phone_number = $request->phone_number;
+    //         if ($request->hasFile('photo')) {
+    //             $file_name = $this->saveImage($request->file('photo'), 'images/dashboard/subscriptions');
+    //             $subscription->photo = $file_name;
+    //         }
+    //         $subscription->method = 'vcash'; // تخزين طريقة الدفع
+    //         $subscription->save();
+    //     } elseif ($request->payment_method === 'ipa') {
+    //         // Process Insta Pay subscription
+    //         $subscription = new Subscription();
+    //         $subscription->phone_number = $request->phone_number;
+    //         if ($request->hasFile('photo')) {
+    //             $file_name = $this->saveImage($request->file('photo'), 'images/dashboard/subscriptions');
+    //             $subscription->photo = $file_name;
+    //         }
+    //         $subscription->method = 'ipa';  // تخزين طريقة الدفع
+    //         $subscription->save();
+    //     }
+
+    //     return redirect()->route('website.index');
+    // }
 }

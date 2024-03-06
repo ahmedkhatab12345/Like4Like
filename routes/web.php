@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\Website\SubscriptionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Website\ProfitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Website\SiteController;
+use App\Http\Controllers\Website\WithdrawalController;
+use App\Models\Withdrawal;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,21 +20,18 @@ use App\Http\Controllers\Website\SiteController;
 */
 
 Route::get('web-site', [SiteController::class, 'index'])->name('website.index');
+
 Route::get('help', [SiteController::class, 'help'])->name('help');
+
 // Payment
-Route::get('subscription', [SiteController::class, 'subscription'])->name('subscription');
-Route::post('store-subscription', [SiteController::class, 'storeSubscription'])->name('storeSubscription');
-
-Route::get('/ipa', function () {
-    return view('webSite.selected.ipa' );
-});
-
-Route::get('/vcash', function () {
-    return view('webSite.selected.vcash' );
-});
+Route::get('subscription', [SubscriptionController::class, 'subscription'])->name('subscription');
+Route::post('store-subscription', [SubscriptionController::class, 'storeSubscription'])->name('storeSubscription');
 // End Payment
 
-Route::resource('profits',ProfitController::class);
+// Withdrawal
+Route::get('withdrawal',[WithdrawalController::class, 'index'])->name('withdrawal.index');
+Route::post('store',[WithdrawalController::class, 'store'])->name('store');
+// End Withdrawal
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

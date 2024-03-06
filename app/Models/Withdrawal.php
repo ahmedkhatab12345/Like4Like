@@ -13,14 +13,20 @@ class Withdrawal extends Model
         'customer_id',
         'phone_number',
         'withdrawal_amount',
+        'total_earning',
         'status',
         'methoud',
         'photo',
     ];
 
 
-    public function customer() 
+    public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+    
+    public static function calculateTotalEarnings()
+    {
+        return self::sum('withdrawal_amount');
     }
 }
