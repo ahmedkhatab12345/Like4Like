@@ -1,12 +1,15 @@
 <?php
 
-use App\Http\Controllers\Website\SubscriptionController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Website\ProfitController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Website\LoginController;
 use App\Http\Controllers\Website\SiteController;
 use App\Http\Controllers\Website\WithdrawalController;
-use App\Models\Withdrawal;
+use App\Http\Controllers\Website\WorkController;
+use App\Http\Controllers\Website\SubscriptionController;
+use App\Http\Controllers\Website\HelpController;
+
+use App\Models\Withdrawal; 
 
 /*
 |--------------------------------------------------------------------------
@@ -19,20 +22,30 @@ use App\Models\Withdrawal;
 |
 */
 
-Route::get('web-site', [SiteController::class, 'index'])->name('website.index');
 
-Route::get('help', [SiteController::class, 'help'])->name('help');
+    Route::get('sign-in', [LoginController::class, 'getSignin'])->name('Signin.customer');
+    Route::get('sign-up', [LoginController::class, 'getSignup'])->name('Signup.customer');
+    Route::post('sign-up', [LoginController::class, 'CustomerSignup'])->name('Signup');
+    Route::post('sign-in', [LoginController::class, 'CustomerSignin'])->name('Signin');
 
-// Payment
-Route::get('subscription', [SubscriptionController::class, 'subscription'])->name('subscription');
-Route::post('store-subscription', [SubscriptionController::class, 'storeSubscription'])->name('storeSubscription');
-// End Payment
+    Route::get('welcome', [SiteController::class, 'welcom'])->name('website.welcome');
 
-// Withdrawal
-Route::get('withdrawal',[WithdrawalController::class, 'index'])->name('withdrawal.index');
-Route::post('store',[WithdrawalController::class, 'store'])->name('store');
-// End Withdrawal
+    // dashboard
+    Route::get('works-user', [SiteController::class, 'index'])->name('works.customer.index');
+    // end dashboard
+    // Payment
+    Route::get('subscription', [SubscriptionController::class, 'subscription'])->name('subscription');
+    Route::post('store-subscription', [SubscriptionController::class, 'storeSubscription'])->name('storeSubscription');
+    // End Payment
 
+    // Withdrawal
+    Route::get('withdrawal',[WithdrawalController::class, 'index'])->name('withdrawal.index');
+    Route::post('store',[WithdrawalController::class, 'store'])->name('store');
+    // End Withdrawal
+
+    // Help
+    Route::get('help', [HelpController::class, 'index'])->name('help.index');
+    // End Help
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

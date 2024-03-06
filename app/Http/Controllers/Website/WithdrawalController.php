@@ -43,8 +43,6 @@ class WithdrawalController extends Controller
         $withdrawal->phone_number = $request->phone_number;
         $withdrawal->withdrawal_amount = $request->withdrawal_amount;
         $withdrawal->methoud = $request->methoud;
-        $withdrawal->total_earnings = Withdrawal::calculateTotalEarnings();
-        $withdrawal->customer_id = auth()->id();
 
         // Save the model to the database
         $withdrawal->save();

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique;
+            $table->string('phone_number')->unique;
             $table->string('password');
             $table->string('photo')->nullable();
             $table->decimal('total_earning', 10, 2)->default(0);
@@ -22,7 +23,7 @@ return new class extends Migration
             $table->timestamps(); 
         });
     }
-
+    
     /**
      * Reverse the migrations.
      */
