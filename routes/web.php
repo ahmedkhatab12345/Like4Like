@@ -9,7 +9,7 @@ use App\Http\Controllers\Website\WorkController;
 use App\Http\Controllers\Website\SubscriptionController;
 use App\Http\Controllers\Website\HelpController;
 use App\Http\Controllers\Website\ProfitController;
-use App\Models\Withdrawal; 
+use App\Models\Withdrawal;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +33,9 @@ use App\Models\Withdrawal;
     // dashboard
     Route::get('works-user', [WorkController::class, 'index'])->name('webSite.work.index');
     Route::get('facebook', [WorkController::class, 'facebook'])->name('facebook');
+    Route::post('faceStore', [WorkController::class, 'faceStore'])->name('faceStore');
     Route::get('youtube', [WorkController::class, 'youtube'])->name('youtube');
+    Route::post('youtStore', [WorkController::class, 'youtStore'])->name('youtStore');
     // end dashboard
 
     // Payment

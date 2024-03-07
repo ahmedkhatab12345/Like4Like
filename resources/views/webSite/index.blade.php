@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-6 ">
             <div class="w-50 p-2 mx-auto shadow">
-                <a href="{{route('youtube')}}"  class="w-50 mx-auto">
+                <a href="{{route('youtube')}}"  class="">
                     <img src="{{url('/')}}/website/assets/work/youtube.jfif" style="cursor: pointer" class="w-100" alt="">
                 </a>
             </div>

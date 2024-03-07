@@ -2,10 +2,9 @@
 
 @section('content')
 
-    <div class="MyContainer" style="width: 100%; margin: auto; margin-top: 10px;">
-        
-        <div class="mx-3 py-3">
+    <div class="MyContainer my-4 " style="width: 100%; margin: auto; margin-top: 10px;">
 
+        <div class="mx-3  ">
 
             <form action="{{ route('storeSubscription') }}" method="POST" class="form-control shadow w-50 m-auto" enctype="multipart/form-data">
                 @csrf

@@ -3,8 +3,8 @@
 
 
 <!-- start submit-->
-<div class="container py-4">
-    <div class="row py-3">
+<div class="container  py-4">
+    <div class="row my-4 py-3">
         <form action="{{ route('store') }}" method="POST" class="mb-3" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
