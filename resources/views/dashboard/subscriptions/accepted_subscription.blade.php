@@ -28,7 +28,8 @@
                                             </div>
                                             <!-- Add your update form or any other actions here -->
                                             <div class="card-footer bg-light text-center"> <!-- توسيط العناصر بالمنتصف -->
-                                                <button type="button" class="btn btn-danger btn-lg cancel-subscription-btn" data-subscription-id="{{ $subscription->id }}">إلغاء الاشتراك</button>
+                                                <button type="button" class="btn btn-danger btn-lg confirm-subscription-btn" data-subscription-id="{{ $subscription->id }}">إلغاء الاشتراك</button>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -46,36 +47,35 @@
 
 @section('scripts')
 <script>
-    $('.cancel-subscription-btn').on('click', function () {
-        // احصل على معرف الاشتراك
+    $('.confirm-subscription-btn').on('click', function () {
         var subscriptionId = $(this).data('subscription-id');
+        var status = 'cancelled'; // تعيين الحالة الجديدة "active"
 
-        // اطلب تأكيد المستخدم قبل الحذف
-        if (confirm('هل أنت متأكد أنك تريد الغاء الاشتراك؟')) {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-
-            // إرسال طلب الحذف عبر AJAX بعد التأكيد
-            $.ajax({
-                method: 'DELETE',
-                url: '/subscriptions/' + subscriptionId,
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                dataType: 'json',
-                success: function (response) {
-                    console.log(response.message);
-
-                    $('#success-toast').toast('show');
-
-                    // إعادة تحميل الصفحة بعد الحذف بنجاح
-                    location.reload();
-                },
-                error: function (error) {
-                    console.error('Error deleting subscription: ', error);
-                }
-            });
-        }
+        updateSubscriptionStatus(subscriptionId, status);
     });
+
+    function updateSubscriptionStatus(subscriptionId, status) {
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            method: 'POST',
+            url: '/subscriptions/' + subscriptionId + '/' + status,
+            dataType: 'json',
+            data: {
+                _token: csrfToken
+            },
+            success: function (response) {
+                console.log(response.message);
+
+                $('#success-toast').toast('show');
+
+                location.reload();
+            },
+            error: function (error) {
+                console.error('Error updating subscription status: ', error);
+            }
+        });
+    }
 </script>
 @endsection
 

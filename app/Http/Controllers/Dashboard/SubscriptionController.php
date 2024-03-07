@@ -18,9 +18,13 @@ class SubscriptionController extends Controller
         return view('dashboard.subscriptions.index', compact('subscriptions'));
     }
     
-    public function accepted_sub(){
+    public function accepted_sub(){   
         $subscriptions = Subscription::where('status', 'active')->get();
         return view('dashboard.subscriptions.accepted_subscription', compact('subscriptions'));
+    }
+    public function cancelled_sub(){   
+        $subscriptions = Subscription::where('status', 'cancelled')->get();
+        return view('dashboard.subscriptions.cancelled_subscription', compact('subscriptions'));
     }
 
     public function updateStatus($subscriptionId, $status)
@@ -41,15 +45,5 @@ class SubscriptionController extends Controller
         return response()->json(['message' => 'Subscription status updated successfully']);
     }
 
-    public function destroy($id)
-    {
-        // ابحث عن الاشتراك باستخدام الهوية الممررة
-        $subscription = Subscription::findOrFail($id);
-
-        // قم بحذف الاشتراك
-        $subscription->delete();
-
-        // قم بإرجاع رسالة ناجحة
-        return response()->json(['message' => 'تم حذف الاشتراك بنجاح.']);
-    }
+    
 }

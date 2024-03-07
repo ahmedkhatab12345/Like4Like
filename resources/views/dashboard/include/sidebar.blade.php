@@ -36,8 +36,10 @@
 </a>
 
 <ul class="sub-menu collapse" id="menu-Account">
-<li><a class="ms-link" href="{{route('works.index')}}">جميع الاعمال</a></li>
 <li><a class="ms-link" href="{{route('works.create')}}">اضافه عمل جديد</a></li>
+<li><a class="ms-link" href="{{route('works.index')}}"> روابط فيس بوك </a></li>
+<li><a class="ms-link" href="{{route('works.index')}}"> روابط يوتيوب </a></li>
+
 </ul>
 </li>
 <li class="collapsed">
@@ -63,6 +65,14 @@
         <a class="ms-link text-success" href="{{route('accepted.subscription')}}">
             الاشتراكات المفعلة
             <span class="badge rounded-pill bg-success float-right ml-2">{{ App\Models\Subscription::where('status', 'active')->count() }}</span>
+
+        </a>
+    </li>
+
+    <li>
+        <a class="ms-link text-danger" href="{{route('cancelled.subscription')}}">
+            الاشتراكات الملغيه
+            <span class="badge rounded-pill bg-danger float-right ml-2">{{ App\Models\Subscription::where('status', 'cancelled')->count() }}</span>
 
         </a>
     </li>

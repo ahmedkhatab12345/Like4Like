@@ -74,7 +74,7 @@ class LoginController extends Controller
         ]);
         Auth::guard('customers')->loginUsingId($customers->id);
     
-        return redirect()->route('works.customer.index')->with('success', 'تم التسجيل وتسجيل الدخول بنجاح');
+        return redirect()->route('webSite.work.index')->with('success', 'تم التسجيل وتسجيل الدخول بنجاح');
     }
     
 
@@ -91,7 +91,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('customers')->attempt($credentials)) {
-            return redirect()->route('works.customer.index')->with('success', 'تم تسجيل الدخول بنجاح');
+            return redirect()->route('webSite.work.index')->with('success', 'تم تسجيل الدخول بنجاح');
         }
 
         return redirect()->back()->with('error', 'فشل تسجيل الدخول، يرجى التحقق من البريد الإلكتروني وكلمة المرور');

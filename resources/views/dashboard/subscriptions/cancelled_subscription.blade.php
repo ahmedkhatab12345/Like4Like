@@ -15,7 +15,7 @@
                                     <div class="col">
                                         <div class="card h-100 border-primary bg-light">
                                         <div class="card-header bg-primary text-white text-center">
-                                            <h5>طلب اشتراك </h5>
+                                            <h5> اشتراك ملغي</h5>
                                         </div>
 
                                             <div class="card-body">

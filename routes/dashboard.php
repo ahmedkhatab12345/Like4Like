@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     //Start Route Of subscriptions
     Route::resource('subscriptions', SubscriptionController::class);
     Route::get('accepted-subscription', [SubscriptionController::class, 'accepted_sub'])->name('accepted.subscription');
+    Route::get('cancelled-subscription', [SubscriptionController::class, 'cancelled_sub'])->name('cancelled.subscription');
     Route::post('/subscriptions/{subscriptionId}/{status}', [SubscriptionController::class, 'updateStatus']);
     //End Route Of subscriptions
 
@@ -44,8 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('withdrawals', [WithdrawalController::class, 'index'])->name('withdrawals.index');
     Route::get('accepted-withdrawals', [WithdrawalController::class, 'accepted_withdrawals'])->name('accepted.withdrawals');
     Route::get('rejected-withdrawals', [WithdrawalController::class, 'rejected_withdrawals'])->name('rejected.withdrawals');
-    Route::put('withdrawals/{withdrawal}/update', [WithdrawalController::class, 'update'])->name('withdrawals.update');
-
+    Route::post('/withdrawals/{withdrawalId}/{status}', [WithdrawalController::class, 'updateStatus']);
 
 });
 

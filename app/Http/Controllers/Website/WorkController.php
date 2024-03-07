@@ -14,12 +14,12 @@ class WorkController extends Controller
     }
 
     public function facebook(){
-        $works = Work::all();
-        return view('webSite.work.facebook');
+        $works = Work::where(['type'=>'facebook'])->get();
+        return view('webSite.work.facebook',compact('works'));
     }
 
     public function youtube(){
-        $works = Work::all();
-        return view('webSite.work.youtube');
+        $works = Work::where(['type'=>'youtube'])->get();
+        return view('webSite.work.youtube',compact('works'));
     }
 }
