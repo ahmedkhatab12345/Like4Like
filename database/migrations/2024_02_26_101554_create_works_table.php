@@ -16,6 +16,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('photo');
             $table->string('link')->unique();
+            $table->enum('type', ['facebook', 'youtube']);
             $table->timestamps();
         });
     }
