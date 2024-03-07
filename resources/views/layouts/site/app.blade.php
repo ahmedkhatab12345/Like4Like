@@ -22,6 +22,19 @@
   rel="stylesheet" />
   <link rel="stylesheet" href="{{ asset('path/to/dropify.min.css') }}">
 <link rel="stylesheet" href="{{url('/')}}/website/assets/css/main.css" />
+<style>
+    .navbar-nav .nav-link {
+    color: black !important;
+    font-weight: 400
+    }
+    .navbar-nav .nav-link:hover{
+        color: red !important;
+    }
+    .navbar-nav .nav-link.active  {
+        color: rgb(195, 30, 9) !important;
+        border-bottom: 3px solid red ;
+    }
+</style>
 <script src="{{ asset('path/to/dropify.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

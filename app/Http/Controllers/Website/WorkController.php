@@ -12,4 +12,14 @@ class WorkController extends Controller
         $works = Work::all();
         return view('webSite.work.index',compact('works'));
     }
+
+    public function facebook(){
+        $works = Work::all();
+        return view('webSite.work.facebook');
+    }
+
+    public function youtube(){
+        $works = Work::all();
+        return view('webSite.work.youtube');
+    }
 }

@@ -14,7 +14,7 @@
 <body>
 
     <!-- start Header -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white position-fixed w-100 top-0"
+    {{-- <nav class="navbar navbar-expand-lg navbar-light bg-white position-fixed w-100 top-0"
         style="z-index: 100;box-shadow: 0px 4px 8px 0px #ABBED166;">
         <div class="container">
             <a class="navbar-brand fs-1" href="#"><span style="color: blue">like</span><span
@@ -34,20 +34,41 @@
                 </button></a> 
             </div>
         </div>
+    </nav> --}}
+
+    <nav class="navbar navbar-expand-lg  navbar-light bg-white  w-100 top-0 shadow"
+        >
+        <div class="container d-flex justify-content-between">
+            <div>
+                <a class="navbar-brand fs-1" href="#"><span style="color: blue">like</span><span
+                    style="color: red">4like</span></a>
+            </div>
+            
+            <div class="navbar" id="navbarSupportedContent" >
+                <a href="{{route('Signin.customer')}}"> 
+                <button type="button"  class="btn btn-primary">
+                    انشاء حساب
+                </button></a>
+            </div>
+        </div>
     </nav>
     <!-- End Header -->
 
     <!--Start Body-->
     <div class="w-100 d-flex justify-content-center align-items-center flex-column"
-        style="height: 500px;margin-top: 100px;">
-     <a href="https://accounts.google.com/gsi/select?client_id=457461254949-e9scde3j8dt1g6bjbc7rsfdslpg8ic13.apps.googleusercontent.com&ux_mode=popup&ui_mode=card&nonce=QhLhMhSqPKj&as=t5vFhx%2Bsdd%2FvxW%2B1QCWm6Q&channel_id=b6e0005f154d36f1f0278a1c8c051f1e5c26d08aa5aa7e184dbb2ce9b6428c51&origin=https%3A%2F%2Fwww.pexels.com">  <div class="p-10 text-center fw-bold rounded" style="width: 390px;border: 2px solid #000000;padding: 10px;"><img
-                src="assets/Google.jpg" class="rounded-circle" style="width: 30px; margin-right: 15px; ">حساب جوجل</div></a> 
-        <p class="mt-4 mb-4">او</p>
-        <form method="POST" action="{{route('Signin')}}" class="d-flex flex-column gap-4 w-100 justify-content-center align-items-center">
+        >
+    
+        <form method="POST" action="{{route('Signin')}}"  class="py-5 my-4 text-center  rounded shadow form w-50 ">
             @csrf    
-            <input name="email" type="text" placeholder="Email" style="width: 390px; padding: 10px; border: 4px solid black;">
-            <input name="password" type="password" placeholder="Password" style="width: 390px; padding: 10px; border: 4px solid black;">
-            <button type="submit" style="width: 12%;padding: 10px; background-color: #FF0000; outline: none;border:none; color: white; border-radius: 5px;">دخول</button>
+            <input name="email" type="text" placeholder="Email" class="form-control my-2 w-75 mx-auto">
+            @error('email')
+                <div class="alert alert-danger  w-75 mx-auto">{{ $message }}</div>
+            @enderror
+            <input name="password" type="password" placeholder="Password" class="form-control my-2 w-75 mx-auto">
+            @error('password')
+                <div class="alert alert-danger  w-75 mx-auto">{{ $message }}</div>
+            @enderror
+            <button type="submit"class="btn btn-outline-primary my-2">دخول</button>
         </form>
     </div>
     <!--End Body-->

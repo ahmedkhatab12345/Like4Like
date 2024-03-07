@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Customer;
 use App\Traits\UploadTrait;
+use Illuminate\Support\Facades\Validator;
+
 use File;
 class LoginController extends Controller
 {
@@ -21,24 +23,69 @@ class LoginController extends Controller
         return view('dashboard.customer.auth.signup');
     }
 
+    // function CustomerSignup(Request $request) {
+    //     $file_name = $this->saveImage($request->photo, 'images/website/customers');
+    //     $customers = Customer::create([
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'phone_number' => $request->phone_number,
+    //         'password' => bcrypt($request->password),
+    //         'photo' => $file_name,
+    //     ]);
+    //     Auth::guard('customers')->loginUsingId($customers->id);
+
+    //     return redirect()->route('works.customer.index')->with('success', 'تم التسجيل وتسجيل الدخول بنجاح');
+    // }
+
     function CustomerSignup(Request $request) {
-        $file_name = $this->saveImage($request->photo, 'images/website/customers');
+        // Validation rules
+        $rules = [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:customers',
+            'phone_number' => 'required|string|max:20|regex:/^[0-9]{10,20}$/',
+            'password' => 'required|string|min:8',
+        ];
+        // Validation messages
+        $messages = [
+            'name.required' => 'حقل مطلوب',
+            'email.required' => 'حقل مطلوب',
+            'email.email' => 'ايميل غير صحيح',
+            'email.unique' => 'ايميل موجود مسبقا',
+            'phone_number.required' => 'حقل مطلوب',
+            'phone_number.regex' => 'رقم الهاتف غير صحيح',
+            'password.required' => 'حقل مطلوب',
+            'password.min' => 'يجب الا تقل كلمة السر عن 8 حروف او ارقام',
+        ];
+    
+        // Validate the request
+        $validator = Validator::make($request->all(), $rules, $messages);
+    
+        // Check if validation fails
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+    
+        // Proceed with saving data if validation passes
         $customers = Customer::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'password' => bcrypt($request->password),
-            'photo' => $file_name,
         ]);
         Auth::guard('customers')->loginUsingId($customers->id);
-
+    
         return redirect()->route('works.customer.index')->with('success', 'تم التسجيل وتسجيل الدخول بنجاح');
     }
+    
 
     function CustomerSignin(Request $request) {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+        ],[
+            'email.required' => 'حقل مطلوب',
+            'email.email' => 'ايميل غير صحيح',
+            'password.required' => 'حقل مطلوب',
         ]);
 
         $credentials = $request->only('email', 'password');
