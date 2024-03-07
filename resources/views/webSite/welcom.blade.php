@@ -24,27 +24,23 @@
 
 <body>
   <!-- start Header -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white position-fixed w-100 " style="z-index: 100;box-shadow: 0px 4px 8px 0px #ABBED166;">
-    <div class="container">
-      <a class="navbar-brand fs-1" href="#"><span style="color: blue">like</span><span
-          style="color: red">4like</span></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent" style=" padding-right: 75%;">
-  <a href="{{route('Signin.customer')}}">     <button type="button" style="
-           background-color: red;
-              outline: none;
-              color: white;
-              border: none;
-              padding: 5px 20px; width: 150px;">
-          تسجيل الدخول
-        </button></a> 
-      </div>
-    </div>
-  </nav>
+    <nav class="navbar navbar-expand-lg  navbar-light bg-white  w-100 top-0 shadow">
+        <div class="container  d-flex justify-content-between">
+            <a class="navbar-brand fs-1" href="#"><span style="color: blue">like</span><span
+            style="color: red">4like</span>
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+            <a href="{{route('Signin.customer')}}">
+        <button type="button"  class="btn btn-primary">
+            تسجيل الدخول
+            </button></a>
+        </div>
+        </div>
+    </nav>
   <!-- End Header -->
+  
   <!-- Start Landing Page -->
   <div class="landing-parent px-4">
     <div class="landing-img"></div>
@@ -70,7 +66,7 @@
             </ul>
             <a class="action text-center my-5" href="{{route('Signup.customer')}}">
             <button style="background-color: red;padding: 7px 55px;outline: none;border: none;color: white;border-radius: 6px;font-size: 24px;">
-              انضم الينا 
+              انضم الينا
               </button>
             </a>
           </div>

@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="MyContainer" style="width: 100%; margin: auto; margin-top: 10px;">
-        <img src="{{url('/')}}/website/assets/spash.jpg" style="width: 100%; height: 500px; margin-bottom: 70px;">
+        
         <div class="mx-3 py-3">
 
 

@@ -1,8 +1,8 @@
 @extends('layouts.site.app')
 @section('content')
 
-<div class="container min-vh-100 ">
-    <img src="{{url('/')}}/website/assets/spash.jpg" style="width: 100%; height: 500px; margin-bottom: 70px;">
+<div class="container ">
+    <img src="{{url('/')}}/website/assets/spash.jpg" >
     <div class="row my-5 ">
         <div class="col-md-6 mx-auto ">
             <div class="w-50 p-2 mx-auto shadow">
@@ -17,7 +17,7 @@
                     <img src="{{url('/')}}/website/assets/work/youtube.jfif" style="cursor: pointer" class="w-100" alt="">
                 </a>
             </div>
-            
+
         </div>
       </div>
 

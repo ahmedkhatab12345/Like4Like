@@ -1,11 +1,9 @@
 @extends('layouts.site.app')
 @section('content')
-<div class="MyContainer" style="width: 100%;
-margin: auto;
-margin-top: 10px;">
-  <img src="{{url('/')}}/website/assets/assets/spash.jpg " style="width: 100%; height: 500px; margin-bottom:70px;">
+<div class="container " >
 
-  <div class="col-lg-5 col-md-6 col-12" style="width: 100%; padding-inline: 5px;  padding-right: 40px; ">
+
+  <div class="col-lg-5 col-md-6 col-12 " style="width: 100%;  ">
     <h1 style="color: #ff0000;">من نحن!!</h1>
       <p style="font-size: large;">لوريم إيبسوم، أو Lipsum كما يُعرف أحيانًا، هو نص وهمي يستخدم في تخطيط تصميمات الطباعة أو الرسوم أو تصميمات الويب. يُنسب هذا المقطع إلى عامل طباعة غير معروف في القرن الخامس عشر يُعتقد أنه قام بخلط أجزاء من كتاب شيشرون De Finibus Bonorum et Malorum لاستخدامها في نموذج كتاب. يبدأ عادةً بـ:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut Labore et dolore magna aliqua."
