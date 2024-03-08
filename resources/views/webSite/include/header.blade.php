@@ -14,6 +14,10 @@
                 <a class="nav-link {{ request()->is('profit*') ? 'active' : '' }}" aria-current="page" href="{{route('profit.index')}}">الارباح</a>
                 <a class="nav-link {{ request()->is('help*') ? 'active' : '' }}" aria-current="page" href="{{route('help.index')}}">الدعم</a>
             </ul>
+            <form method="POST" action="{{ route('test', auth('customers')->id()) }}">
+                @csrf
+                <button type="submit" class=" btn btn-danger">تسجيل الخروج</button>
+                </form>
         </div>
     </div>
 </nav>

@@ -37,7 +37,7 @@ class LoginController extends Controller
     //     return redirect()->route('works.customer.index')->with('success', 'تم التسجيل وتسجيل الدخول بنجاح');
     // }
 
-    function CustomerSignup(Request $request) {
+    public function CustomerSignup(Request $request) {
         // Validation rules
         $rules = [
             'name' => 'required|string|max:255',
@@ -78,7 +78,7 @@ class LoginController extends Controller
     }
     
 
-    function CustomerSignin(Request $request) {
+    public function CustomerSignin(Request $request) {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -95,6 +95,18 @@ class LoginController extends Controller
         }
 
         return redirect()->back()->with('error', 'فشل تسجيل الدخول، يرجى التحقق من البريد الإلكتروني وكلمة المرور');
+    }
+
+    public function CustomerLogout($id)
+    {
+        $customer = Customer::find($id);
+    
+        if ($customer) {
+            Auth::guard('customers')->logout();
+            return redirect()->route('website.welcome');
+        } else {
+            return redirect()->route('webSite.work.index')->with('error', 'فشل تسجيل الخروج. العميل غير موجود.');
+        }
     }
 
 }

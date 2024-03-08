@@ -45,7 +45,7 @@
             </div>
             
             <div class="navbar" id="navbarSupportedContent" >
-                <a href="{{route('Signin.customer')}}"> 
+                <a href="{{route('Signup.customer')}}"> 
                 <button type="button"  class="btn btn-primary">
                     انشاء حساب
                 </button></a>

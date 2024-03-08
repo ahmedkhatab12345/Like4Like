@@ -18,6 +18,7 @@ use App\Http\Controllers\Dashboard\WithdrawalController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::middleware(['auth'])->group(function () {
     
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');

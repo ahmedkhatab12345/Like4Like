@@ -19,4 +19,22 @@ class Customer extends Model implements Authenticatable
         'photo', 
         'total_earning',
     ];
+
+    public function completedTasks()
+    {
+        return $this->hasMany(Work::class, 'customer_id')->where('status', 1);
+    }
+
+    public function screenshots()
+    {
+        return $this->hasMany(Screenshot::class);
+    }
+
+    public function liks()
+    {
+        return $this->hasMany(Link::class);
+    }
+    public function work():BelongsToMany{
+        return $this->belongsToMany(Work::class);
+    }
 }

@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('works', function (Blueprint $table) {
+        Schema::create('screenshots', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
+            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->string('photo');
-            $table->string('link')->unique();
-            $table->enum('type', ['facebook', 'youtube']);
-            $table->enum('status', ['0', '1'])->default('0');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('works');
+        Schema::dropIfExists('screenshots');
     }
 };
