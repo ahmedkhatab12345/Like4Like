@@ -29,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
 
     //Start Route Of Works
     Route::resource('works', WorkController::class);
+    Route::get('links-facebook', [WorkController::class, 'getfacebooklinks'])->name('facebook.links');
+    Route::get('links-youtube', [WorkController::class, 'getyoutubelinks'])->name('youtube.links');
     //End Route Of works
     
     //Start Route Of subscriptions

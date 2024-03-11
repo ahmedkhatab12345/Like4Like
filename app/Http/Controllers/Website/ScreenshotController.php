@@ -16,7 +16,9 @@ class ScreenshotController extends Controller
         $screenshot = Screenshot::create([
             'photo' => $file_name,
         ]);
-        return redirect()->back()->with('success', 'تم تقديم المهمة بنجاح!');
+        toastr()->success('تم تقديم المهمة بنجاح!');
+
+        return redirect()->back();
     }
 
 }

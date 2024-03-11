@@ -8,7 +8,7 @@
 <ul class="menu-list">
 <li class="divider py-2 lh-sm"><span class="small">MAIN</span><br> <small class="text-muted">Unique dashboard designs </small></li>
 <li>
-<a class="m-link active" href="index.html">
+<a class="m-link active" href="{{route('dashboard.index')}}">
 <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="currentColor" viewBox="0 0 16 16">
 <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
 <path class="fill-secondary" fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
@@ -37,8 +37,8 @@
 
 <ul class="sub-menu collapse" id="menu-Account">
 <li><a class="ms-link" href="{{route('works.create')}}">اضافه عمل جديد</a></li>
-<li><a class="ms-link" href="{{route('works.index')}}"> روابط فيس بوك </a></li>
-<li><a class="ms-link" href="{{route('works.index')}}"> روابط يوتيوب </a></li>
+<li><a class="ms-link" href="{{route('facebook.links')}}"> روابط فيس بوك </a></li>
+<li><a class="ms-link" href="{{route('youtube.links')}}"> روابط يوتيوب </a></li>
 
 </ul>
 </li>
@@ -79,6 +79,7 @@
 </ul>
 
 </li>
+@can('viewSubscription-admin')
 <li class="collapsed">
 <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu_pages" href="#">
 <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="currentColor" viewBox="0 0 16 16">
@@ -111,6 +112,7 @@
 </ul>
 
 </li>
+@endcan
 <li>
 <a class="m-link" href="{{route('website.welcome')}}">
 <span class="ms-2">زياره الموقع</span>

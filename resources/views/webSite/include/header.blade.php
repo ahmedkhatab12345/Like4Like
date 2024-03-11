@@ -8,10 +8,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav ms-auto">
+            
                 <a class="nav-link  {{ request()->is('work*') ? 'active' : '' }}" aria-current="page" href="{{route('webSite.work.index')}}">بيان العمل</a>
                 <a class="nav-link {{ request()->is('subscription') ? 'active' : '' }}" aria-current="page" href="{{route('subscription')}}">الاشتراك في الباقه</a>
-                <a class="nav-link {{ request()->is('withdrawal*') ? 'active' : '' }}" aria-current="page" href="{{route('withdrawal.index')}}">السحب</a>
-                <a class="nav-link {{ request()->is('profit*') ? 'active' : '' }}" aria-current="page" href="{{route('profit.index')}}">الارباح</a>
+                @can('active-customer')                    
+                <a class="nav-link {{ request()->is('withdrawal*') ? 'active' : '' }}" aria-current="page" href="{{ route('withdrawal.index') }}">السحب</a>
+                <a class="nav-link {{ request()->is('profit*') ? 'active' : '' }}" aria-current="page" href="{{ route('profit.index') }}">الارباح</a>
+                @endcan
                 <a class="nav-link {{ request()->is('help*') ? 'active' : '' }}" aria-current="page" href="{{route('help.index')}}">الدعم</a>
             </ul>
             <form method="POST" action="{{ route('test', auth('customers')->id()) }}">

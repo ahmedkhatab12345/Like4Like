@@ -23,7 +23,7 @@ use App\Models\Withdrawal;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+    Route::get('user-index', [SiteController::class, 'index'])->name('webSite.index');
     Route::get('welcome', [SiteController::class, 'welcom'])->name('website.welcome');
     Route::get('sign-in', [LoginController::class, 'getSignin'])->name('Signin.customer');
     Route::get('sign-up', [LoginController::class, 'getSignup'])->name('Signup.customer');
@@ -36,7 +36,7 @@ use App\Models\Withdrawal;
         Route::post('faceStore', [WorkController::class, 'faceStore'])->name('faceStore');
         Route::get('youtube', [WorkController::class, 'youtube'])->name('youtube');
         Route::post('youtStore', [WorkController::class, 'youtStore'])->name('youtStore');
-        Route::post('executeTask', [WorkController::class, 'executeTask'])->name('executeTask');
+        Route::post('executeTask/{id}', [WorkController::class, 'executeTask'])->name('executeTask');
         // end dashboard
 
         // Payment

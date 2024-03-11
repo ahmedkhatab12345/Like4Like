@@ -13,18 +13,17 @@ use File;
 class SiteController extends Controller
 {
     use UploadTrait;
+    public function index()
+    {
+        return view('webSite.index');
+    }
     
     public function welcom()
     {
         return view('webSite.welcom');
     }
 
-    public function index()
-    {
-        $today = Carbon::today()->toDateString();
-        $works = Work::whereDate('created_at', $today)->take(20)->get();
-        return view('webSite.index', compact('works'));
-    }
+    
 
     
 

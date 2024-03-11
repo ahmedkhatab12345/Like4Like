@@ -43,5 +43,11 @@
     </div>
 </div>
 <!-- End submit-->
-
+@endsection
+@section('scripts')
+@if (session('success'))
+    <script>
+        alert()->success('Success Title', '{{ session('success') }}');
+    </script>
+@endif
 @endsection

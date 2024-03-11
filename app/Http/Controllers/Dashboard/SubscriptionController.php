@@ -29,19 +29,15 @@ class SubscriptionController extends Controller
 
     public function updateStatus($subscriptionId, $status)
     {
-        // ابحث عن الاشتراك باستخدام المعرف المرسل
         $subscription = Subscription::find($subscriptionId);
 
         if (!$subscription) {
-            // في حالة عدم العثور على الاشتراك، قم بإرجاع استثناء أو رسالة خطأ
             abort(404, 'Subscription not found');
         }
 
-        // قم بتحديث حالة الاشتراك
         $subscription->status = $status;
         $subscription->save();
-
-        // ارجاع رسالة نجاح أو أي بيانات أخرى
+        toastr()->success('تم بنجاح');
         return response()->json(['message' => 'Subscription status updated successfully']);
     }
 

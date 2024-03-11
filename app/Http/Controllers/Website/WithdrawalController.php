@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class WithdrawalController extends Controller
 {
@@ -21,11 +23,11 @@ class WithdrawalController extends Controller
     {
         // Validate the form data
         $validator = Validator::make($request->all(), [
-            'phone_number' => 'required|string',
-            'withdrawal_amount' => 'required|numeric|min:50',
+            'phone_number' => 'required|string|max:255|regex:/^[0-9]{10,20}$/', // يجب أن يكون رقم الهاتف حقلًا إلزاميًا ونصًا بحد أقصى 255 حرفًا            'withdrawal_amount' => 'required|numeric|min:50',
             'methoud' => 'required|in:cach,insta',
         ],[
             'phone_number.required' => 'حقل مطلوب',
+            'phone_number.regex' => 'رقم الهاتف غير صحيح',
             'withdrawal_amount.min' => 'عفوا اقل مبلغ للسحب 50 ج',
             'withdrawal_amount.required' => 'حقل مطلوب',
             'methoud' => 'حقل مطلوب',
@@ -38,16 +40,18 @@ class WithdrawalController extends Controller
 
         // Create a new instance of the Withdrawal model
         $withdrawal = new Withdrawal();
-
+        $customerId = Auth::guard('customers')->id();
         // Fill the model with validated data
         $withdrawal->phone_number = $request->phone_number;
         $withdrawal->withdrawal_amount = $request->withdrawal_amount;
         $withdrawal->methoud = $request->methoud;
+        $withdrawal->customer_id = $customerId;
 
         // Save the model to the database
         $withdrawal->save();
 
         // Redirect back with a success message
-        return redirect()->back()->with('success', 'تمت عملية السحب بنجاح.');
+        toastr()->success('تم بنجاح');
+        return redirect()->back();
     }
 }

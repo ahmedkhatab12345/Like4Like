@@ -3,6 +3,8 @@
 namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Subscription;
+
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -33,6 +35,17 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('delete-admin', function ($user) {
             return $user->role == 'super_admin';
+        });
+
+        Gate::define('viewSubscription-admin', function ($user) {
+            return $user->role == 'super_admin';
+        });
+
+        Gate::define('active-customer', function ($customerId) {
+            $subscription = Subscription::where('customer_id', $customerId)
+                                          ->where('status', 'active')
+                                          ->first();
+            return $subscription !== null;
         });
     }
 }

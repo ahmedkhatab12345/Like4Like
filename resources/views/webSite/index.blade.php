@@ -1,25 +1,32 @@
 @extends('layouts.site.app')
 @section('content')
+                <!-- Carousel Slideshow -->
+                <div id="carousel-example" class="carousel slide" data-ride="carousel">
+                        <!-- Carousel Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-example" data-slide-to="1"></li>
+                            <li data-target="#carousel-example" data-slide-to="2"></li>
+                        </ol>
+                        <div class="clearfix"></div>
+                        <!-- End Carousel Indicators -->
+                        <!-- Carousel Images -->
+                        <div class="carousel-inner">
+                        
+                            <div class="item active">
+                                <img src="">
+                            </div>
+                            
+                             <!-- Carouse Images -->
+                        <!-- Carousel Controls -->
+                        <a class="left carousel-control" href="#carousel-example" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                        <!-- End Carousel Controls -->
+                    </div>
+                    <!-- End Carousel Slideshow -->
 
-<div class="container ">
-    <img src="{{url('/')}}/website/assets/spash.jpg" >
-    <div class="row my-5 ">
-        <div class="col-md-6 mx-auto ">
-            <div class="w-50 p-2 mx-auto shadow">
-                <a href="{{route('facebook')}}"  class="">
-                    <img src="{{url('/')}}/website/assets/work/facebook.jfif" style="cursor: pointer" class="w-100"  alt="">
-                </a>
-            </div>
-        </div>
-        <div class="col-md-6 ">
-            <div class="w-50 p-2 mx-auto shadow">
-                <a href="{{route('youtube')}}"  class="">
-                    <img src="{{url('/')}}/website/assets/work/youtube.jfif" style="cursor: pointer" class="w-100" alt="">
-                </a>
-            </div>
-
-        </div>
-      </div>
-
-</div>
 @endsection

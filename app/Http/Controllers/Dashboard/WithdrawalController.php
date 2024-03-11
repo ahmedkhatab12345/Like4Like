@@ -30,19 +30,15 @@ class WithdrawalController extends Controller
 
     public function updateStatus($withdrawalId, $status)
     {
-        // ابحث عن السحب باستخدام المعرف المرسل
         $withdrawal = Withdrawal::find($withdrawalId);
 
         if (!$withdrawal) {
-            // في حالة عدم العثور على السحب قم بإرجاع استثناء أو رسالة خطأ
             abort(404, 'withdrawal not found');
         }
 
-        // قم بتحديث حالة السحب
         $withdrawal->status = $status;
         $withdrawal->save();
-
-        // ارجاع رسالة نجاح أو أي بيانات أخرى
+        toastr()->success('تم بنجاح');
         return response()->json(['message' => 'withdrawal status updated successfully']);
     }
     

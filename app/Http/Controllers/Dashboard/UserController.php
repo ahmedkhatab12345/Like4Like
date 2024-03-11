@@ -40,7 +40,8 @@ class UserController extends Controller
                 'password'=> $hashedPassword ,
                 'photo'=>$file_name,
             ]);
-            return redirect()->route('users.index')->with('success', 'Admin added successfully.');
+            toastr()->success('تم بنجاح');
+            return redirect()->route('users.index');
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', 'Error adding Admin: ' . $e->getMessage())->withInput();
             }
@@ -71,8 +72,8 @@ class UserController extends Controller
                 'email' => $request->email,
                 'role' => $request->role,
             ]);
-
-            return redirect()->route('users.index')->with('success', 'User updated successfully');
+            toastr()->success('تم بنجاح');
+            return redirect()->route('users.index');
         } catch (\Exception $e) {
 
             return redirect()->route('users.index')->with('error', 'Error updating User: ' . $e->getMessage())->withInput();
@@ -84,7 +85,8 @@ class UserController extends Controller
         $users = User::destroy($id);
 
         if ($users) {
-            return redirect()->route('users.index')->with('success', 'Admin deleted successfully');
+            toastr()->success('تم بنجاح');
+            return redirect()->route('users.index');
         } else {
             return redirect()->route('users.index')->with('error', 'Admin not found');
         }
@@ -119,8 +121,8 @@ class UserController extends Controller
                 'title' => $request->title,
                 'description' => $request->description,
             ]);
-
-            return redirect()->route('dashboard.index')->with('success', 'Data updated successfully');
+            toastr()->success('تم بنجاح');
+            return redirect()->route('dashboard.index');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error updating Data: ' . $e->getMessage())->withInput();
         }

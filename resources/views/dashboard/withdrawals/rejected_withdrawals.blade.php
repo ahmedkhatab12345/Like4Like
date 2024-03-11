@@ -15,7 +15,7 @@
                                     <div class="col">
                                         <div class="card">
                                             <div class="card-header bg-primary text-white">
-                                                <h5 class="mb-0"> {{ optional($withdrawal->customer)->name }} _ الرصيد الكلي: {{ $withdrawal->total_earnings }} جنيه  </h5>
+                                                <h5 class="mb-0"> {{ optional($withdrawal->customer)->name }}</h5>
                                             </div>
                                             <div class="card-body" style="direction: rtl;">
                                                 <h5 class="mb-3" style="margin-top: 0; text-align: right;">رقم الهاتف: <span style="font-weight: bold; font-size: 16px; color: blue;">{{ $withdrawal->phone_number }}</span></h5>

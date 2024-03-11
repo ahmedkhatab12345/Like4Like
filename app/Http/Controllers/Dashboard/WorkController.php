@@ -12,9 +12,14 @@ use Illuminate\Support\Facades\Storage;
 class WorkController extends Controller
 {
     use UploadTrait;
-    public function index()
+    public function getfacebooklinks()
     {
-        $works = Work::all();
+        $works = Work::where(['type'=>'facebook'])->get();
+        return view('dashboard.works.index',compact('works'));
+    }
+    public function getyoutubelinks()
+    {
+        $works = Work::where(['type'=>'youtube'])->get();
         return view('dashboard.works.index',compact('works'));
     }
 
@@ -24,40 +29,28 @@ class WorkController extends Controller
         return view('dashboard.works.create',compact('works'));
     }
 
-    
     public function store(WorkRequest $request)
-{
-    try {
-        // حفظ الصورة
-        $file_name = $this->saveImage($request->photo, 'images/dashboard/works');
-
-        // جلب البيانات من الطلب
-        $worksData = $request->only(['description', 'link']);
-
-        // إنشاء عمل جديد
-        $work = Work::create([
-            'description' => $worksData['description'],
-            'link' => $worksData['link'],
-            'photo' => $file_name,
-        ]);
-
-        // إعادة توجيه المستخدم وعرض رسالة نجاح
-        return redirect()->route('works.index')->with('success', 'تم إضافة العمل بنجاح.');
-
-    } catch (\Exception $e) {
-        // إعادة توجيه المستخدم وعرض رسالة خطأ
-        return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة العمل: ' . $e->getMessage())->withInput();
-    }
-
-}
-
-
-    public function show(string $id)
     {
-        //
+        try {
+            // حفظ الصورة
+            $file_name = $this->saveImage($request->photo, 'images/dashboard/works');
+
+            $worksData = $request->only(['description', 'link', 'type']);
+
+            $work = Work::create([
+                'description' => $worksData['description'],
+                'link' => $worksData['link'],
+                'photo' => $file_name,
+                'type' => $worksData['type'], // إضافة النوع هنا
+            ]);
+            toastr()->success('تم بنجاح');
+            return redirect()->route('works.create');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'حدث خطأ أثناء إضافة العمل: ' . $e->getMessage())->withInput();
+        }
     }
 
-    
     public function edit(string $id)
     {
         $works = Work::find($id);
@@ -92,8 +85,8 @@ class WorkController extends Controller
                 'link' => $request->link, // Update the link
                 'photo' => $file_name,
             ]);
-    
-            return redirect()->route('works.index')->with('success', 'تم تحديث العمل بنجاح.');
+            toastr()->success('تم بنجاح');
+            return redirect()->route('works.index');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'حدث خطأ أثناء تحديث العمل: ' . $e->getMessage())->withInput();
         }
@@ -106,7 +99,8 @@ class WorkController extends Controller
         $works = Work::destroy($id);
 
         if ($works) {
-            return redirect()->route('works.index')->with('success', 'تم الحزف بنجاح');
+            toastr()->success('تم بنجاح');
+            return redirect()->route('works.index');
         } else {
             return redirect()->route('works.index')->with('error', 'يود مشكله في عمليه الحزف برجاء اعاده المحاوله ف وقت لاحق');
         }

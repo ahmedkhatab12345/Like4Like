@@ -37,7 +37,20 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-4">
-                                    <label for="photo" class="form-label text-primary">Photo</label>
+                                    <label for="type" class="form-label text-primary">النوع</label>
+                                    <select name="type" class="form-select @error('type') is-invalid @enderror" id="type" required>
+                                        <option value="">اختر النوع</option>
+                                        <option value="facebook" {{ old('type') == 'facebook' ? 'selected' : '' }}>Facebook</option>
+                                        <option value="youtube" {{ old('type') == 'youtube' ? 'selected' : '' }}>YouTube</option>
+                                    </select>
+                                    @error('type')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-4">
+                                    <label for="photo" class="form-label text-primary">الصوره</label>
                                     <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
                                     @error('photo')
                                         <span class="invalid-feedback" role="alert">
@@ -45,6 +58,7 @@
                                         </span>
                                     @enderror
                                 </div>
+                                
                             </div>
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-success">اضف عمل </button>

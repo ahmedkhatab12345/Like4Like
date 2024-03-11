@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'active', 'cancelled'])->default('pending');
             $table->enum('method', ['vcash', 'ipa']);
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->dateTime('Subscription_End_Date')->nullable();
+            $table->dateTime('Subscription_End_Date')->default(DB::raw('DATE_ADD(created_at, INTERVAL 1 YEAR)'));
             $table->timestamps();
         });
     }

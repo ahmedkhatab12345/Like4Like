@@ -23,26 +23,12 @@ class LoginController extends Controller
         return view('dashboard.customer.auth.signup');
     }
 
-    // function CustomerSignup(Request $request) {
-    //     $file_name = $this->saveImage($request->photo, 'images/website/customers');
-    //     $customers = Customer::create([
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'phone_number' => $request->phone_number,
-    //         'password' => bcrypt($request->password),
-    //         'photo' => $file_name,
-    //     ]);
-    //     Auth::guard('customers')->loginUsingId($customers->id);
-
-    //     return redirect()->route('works.customer.index')->with('success', 'تم التسجيل وتسجيل الدخول بنجاح');
-    // }
-
     public function CustomerSignup(Request $request) {
         // Validation rules
         $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:customers',
-            'phone_number' => 'required|string|max:20|regex:/^[0-9]{10,20}$/',
+            'phone_number' => 'required|string|max:20|unique:customers|regex:/^[0-9]{10,20}$/',
             'password' => 'required|string|min:8',
         ];
         // Validation messages
@@ -53,6 +39,7 @@ class LoginController extends Controller
             'email.unique' => 'ايميل موجود مسبقا',
             'phone_number.required' => 'حقل مطلوب',
             'phone_number.regex' => 'رقم الهاتف غير صحيح',
+            'phone_number.unique' => 'رقم الهاتف موجود مسبقا',
             'password.required' => 'حقل مطلوب',
             'password.min' => 'يجب الا تقل كلمة السر عن 8 حروف او ارقام',
         ];
@@ -73,8 +60,9 @@ class LoginController extends Controller
             'password' => bcrypt($request->password),
         ]);
         Auth::guard('customers')->loginUsingId($customers->id);
-    
-        return redirect()->route('webSite.work.index')->with('success', 'تم التسجيل وتسجيل الدخول بنجاح');
+        toastr()->success('تم تسجيل الدخول بنجاح ');
+
+        return redirect()->route('webSite.index');
     }
     
 
@@ -91,7 +79,9 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('customers')->attempt($credentials)) {
-            return redirect()->route('webSite.work.index')->with('success', 'تم تسجيل الدخول بنجاح');
+            toastr()->success('تم تسجيل الدخول بنجاح ');
+
+            return redirect()->route('webSite.index');
         }
 
         return redirect()->back()->with('error', 'فشل تسجيل الدخول، يرجى التحقق من البريد الإلكتروني وكلمة المرور');
@@ -105,7 +95,9 @@ class LoginController extends Controller
             Auth::guard('customers')->logout();
             return redirect()->route('website.welcome');
         } else {
-            return redirect()->route('webSite.work.index')->with('error', 'فشل تسجيل الخروج. العميل غير موجود.');
+            toastr()->success('تم تسجيل الخروج بنجاح ');
+
+            return redirect()->route('webSite.work.index');
         }
     }
 
