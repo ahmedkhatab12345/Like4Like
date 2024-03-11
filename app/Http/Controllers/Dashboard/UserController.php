@@ -47,38 +47,37 @@ class UserController extends Controller
             }
     }
 
-    public function edit($id){
+    public function edit($id) {
         $users = User::find($id);
-        $roles = \App\Models\User::$roles;
+    
         if (!$users) {
             return redirect()->route('users.index')->with(['error' => 'This Admin Is Not Found']);
         }
-
-        return view('dashboard.users.edit', compact('users','roles'));
+    
+        return view('dashboard.users.edit', compact('users'));
     }
 
-    public function update(UserRequest $request,$id){
+    public function update(Request $request, $id)
+    {
+    try {
+        $user = User::find($id);
 
-        try {
-            $users = User::find($id);
-
-            if (!$users) {
-                return redirect()->route('users.index')->with('error', 'User not found');
-            }
-
-            // Update other data
-            $users->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'role' => $request->role,
-            ]);
-            toastr()->success('تم بنجاح');
-            return redirect()->route('users.index');
-        } catch (\Exception $e) {
-
-            return redirect()->route('users.index')->with('error', 'Error updating User: ' . $e->getMessage())->withInput();
+        if (!$user) {
+            return redirect()->route('users.index')->with('error', 'User not found');
         }
 
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+        ]);
+
+        toastr()->success('تم بنجاح');
+
+        return redirect()->route('users.index');
+    } catch (\Exception $e) {
+        return redirect()->route('users.index')->with('error', 'Error updating User: ' . $e->getMessage())->withInput();
+    }
     }
 
     public function destroy ($id){

@@ -32,24 +32,24 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="mb-3">
-                                <label for="role" class="form-label text-primary">Role</label>
-                                <select name="role" class="form-control @error('role') is-invalid @enderror" id="role" required>
-                                    <option value="{{ old('role', $users->role) }}" selected>{{ ucfirst(old('role', $users->role)) }}</option>
-                                    @foreach($roles as $role)
-                                        <option value="{{ $role }}" {{ old('role', $users->role) == $role ? 'selected' : '' }}>{{ ucfirst($role) }}</option>
-                                    @endforeach
-                                </select>
-                                @error('role')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <div class="mb-3 d-flex align-items-center justify-content-between">
+                                <div class="form-group mb-3">
+                                    <label for="role" class="form-label text-primary">Role</label>
+                                    <select name="role" class="form-control @error('role') is-invalid @enderror" id="role" required>
+                                        <option value="admin" {{ $users->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                                        <option value="super_admin" {{ $users->role === 'super_admin' ? 'selected' : '' }}>Super Admin</option>
+                                    </select>
+                                    @error('role')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-success">Update User</button>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <button type="submit" class="btn btn-success">Update User</button>
-                            </div>
                         </form>
                     </div>
                 </div>
