@@ -37,7 +37,7 @@
      
         <form method="POST" action="{{route('Signup')}}" enctype="multipart/form-data" class="py-5 my-4 text-center  rounded shadow form w-50 ">
             @csrf   
-            <h1 class="h3 mb-2 "> انشاء حساب</h1> 
+            <h1 class="h3 mb-4 "> انشاء حساب</h1> 
             <input name="name" value="{{ old('name') }}" type="text" placeholder="الاسم " class="form-control my-2 w-75 mx-auto"> 
             @error('name')
                 <div class="alert alert-danger  w-75 mx-auto">{{ $message }}</div>

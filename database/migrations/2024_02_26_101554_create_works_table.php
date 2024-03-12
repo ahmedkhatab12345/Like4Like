@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('works', function (Blueprint $table) {
             $table->id();
             $table->text('description');
-            $table->string('photo');
             $table->string('link')->unique();
             $table->enum('type', ['facebook', 'youtube']);
             $table->enum('status', ['0', '1'])->default('0');

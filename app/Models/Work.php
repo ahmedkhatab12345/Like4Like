@@ -9,7 +9,7 @@ class Work extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'description', 'link', 'photo','type','status',
+        'description', 'link','type','status',
     ];
 
     public function customer():BelongsToMany{

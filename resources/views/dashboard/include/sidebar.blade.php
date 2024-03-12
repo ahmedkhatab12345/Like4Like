@@ -79,7 +79,7 @@
 </ul>
 
 </li>
-@can('viewSubscription-admin')
+@can('viewWithdralls-admin')
 <li class="collapsed">
 <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu_pages" href="#">
 <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="currentColor" viewBox="0 0 16 16">

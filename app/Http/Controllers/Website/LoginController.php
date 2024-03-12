@@ -59,7 +59,7 @@ class LoginController extends Controller
             'phone_number' => $request->phone_number,
             'password' => bcrypt($request->password),
         ]);
-        Auth::guard('customers')->loginUsingId($customers->id);
+        Auth::guard('customer')->loginUsingId($customers->id);
         toastr()->success('تم تسجيل الدخول بنجاح ');
 
         return redirect()->route('webSite.index');
@@ -78,7 +78,7 @@ class LoginController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('customers')->attempt($credentials)) {
+        if (Auth::guard('customer')->attempt($credentials)) {
             toastr()->success('تم تسجيل الدخول بنجاح ');
 
             return redirect()->route('webSite.index');
@@ -87,18 +87,12 @@ class LoginController extends Controller
         return redirect()->back()->with('error', 'فشل تسجيل الدخول، يرجى التحقق من البريد الإلكتروني وكلمة المرور');
     }
 
-    public function CustomerLogout($id)
+    public function CustomerLogout()
     {
-        $customer = Customer::find($id);
-    
-        if ($customer) {
-            Auth::guard('customers')->logout();
-            return redirect()->route('website.welcome');
-        } else {
-            toastr()->success('تم تسجيل الخروج بنجاح ');
-
-            return redirect()->route('webSite.work.index');
-        }
+        Auth::guard('customer')->logout();
+        toastr()->success('تم تسجيل الخروج بنجاح ');
+        return redirect()->route('website.welcome');
+        
     }
 
 }

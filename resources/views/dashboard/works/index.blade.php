@@ -7,7 +7,6 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">الوصف</th>
-                    <th scope="col">الصوره</th>
                     <th scope="col">الرابط</th>
                     <th scope="col">العمليات</th>
                 </tr>
@@ -17,7 +16,6 @@
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ Str::limit($work->description, 100) }}</td>
-                        <td><img  style="width: 90px; height: 90px;" src="{{asset('images/dashboard/works/'.$work->photo)}}"></td>
                         <td>{{$work->link}}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">

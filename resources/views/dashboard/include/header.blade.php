@@ -97,7 +97,7 @@
 <a class="list-group-item list-group-item-action border-0" href="page-profile.html"><i class="w30 fa fa-user"></i>My Profile</a>
 <a class="list-group-item list-group-item-action border-0" href=""><i class="w30 fa fa-gear"></i>Settings</a>
 </div>
-<form method="POST" action="{{ route('logout') }}">
+<form method="POST" action="{{ route('logout.admin') }}">
 @csrf
 <button type="submit" class="btn btn-danger w-100"> Sign Out </button>
 </form>

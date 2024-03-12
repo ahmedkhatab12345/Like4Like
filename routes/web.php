@@ -23,14 +23,14 @@ use App\Models\Withdrawal;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-    Route::get('user-index', [SiteController::class, 'index'])->name('webSite.index');
+    Route::get('customer-index', [SiteController::class, 'index'])->name('webSite.index');
     Route::get('welcome', [SiteController::class, 'welcom'])->name('website.welcome');
     Route::get('sign-in', [LoginController::class, 'getSignin'])->name('Signin.customer');
     Route::get('sign-up', [LoginController::class, 'getSignup'])->name('Signup.customer');
     Route::post('sign-up', [LoginController::class, 'CustomerSignup'])->name('Signup');
     Route::post('sign-in', [LoginController::class, 'CustomerSignin'])->name('Signin');
-    Route::post('CustomerLogout/{id}', [LoginController::class, 'CustomerLogout'])->name('test');
-    Route::middleware(['customer'])->group(function () {        
+    Route::post('CustomerLogout', [LoginController::class, 'CustomerLogout'])->name('logout.customer');
+    Route::middleware(['customer'])->prefix('customer')->group(function () {        
         Route::get('works-user', [WorkController::class, 'index'])->name('webSite.work.index');
         Route::get('facebook', [WorkController::class, 'facebook'])->name('facebook');
         Route::post('faceStore', [WorkController::class, 'faceStore'])->name('faceStore');

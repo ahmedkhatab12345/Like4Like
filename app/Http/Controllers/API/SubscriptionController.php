@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,16 +15,16 @@ class SubscriptionController extends Controller
 
     public function index(){
         $subscriptions = Subscription::where('status', 'pending')->get();
-        return view('dashboard.subscriptions.index', compact('subscriptions'));
+        return response()->json(compact('subscriptions'));
     }
     
     public function accepted_sub(){   
         $subscriptions = Subscription::where('status', 'active')->get();
-        return view('dashboard.subscriptions.accepted_subscription', compact('subscriptions'));
+        return response()->json(compact('subscriptions'));
     }
     public function cancelled_sub(){   
         $subscriptions = Subscription::where('status', 'cancelled')->get();
-        return view('dashboard.subscriptions.cancelled_subscription', compact('subscriptions'));
+        return response()->json(compact('subscriptions'));
     }
 
     public function updateStatus($subscriptionId, $status)
@@ -32,12 +32,11 @@ class SubscriptionController extends Controller
         $subscription = Subscription::find($subscriptionId);
 
         if (!$subscription) {
-            abort(404, 'Subscription not found');
+            return response()->json(['error' => 'Subscription not found'], 404);
         }
 
         $subscription->status = $status;
         $subscription->save();
-        toastr()->success('تم بنجاح');
         return response()->json(['message' => 'Subscription status updated successfully']);
     }
 

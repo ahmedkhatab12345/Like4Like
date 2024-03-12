@@ -14,9 +14,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'customers' => [
+        'customer' => [
             'driver' => 'session',
             'provider' => 'customers',
+            'redirect_after_login' => '/user-index',
+            'redirect_after_logout' => '/sign-in',
         ],
 
     ],
@@ -56,3 +58,4 @@ return [
     'password_timeout' => 10800,
 
 ];
+
