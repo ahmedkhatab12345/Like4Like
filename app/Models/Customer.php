@@ -18,6 +18,7 @@ class Customer extends Model implements Authenticatable
         'password',
         'photo', 
         'total_earning',
+        'like_count_day'
     ];
     
     public function subscriptions()
@@ -34,7 +35,7 @@ class Customer extends Model implements Authenticatable
         return $this->hasMany(Screenshot::class);
     }
 
-    public function work(): BelongsToMany
+    public function work()
     {
         return $this->belongsToMany(Work::class);
     }

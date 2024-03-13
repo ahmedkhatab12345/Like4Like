@@ -22,7 +22,7 @@ use App\Models\Withdrawal;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+*/   
     Route::get('customer-index', [SiteController::class, 'index'])->name('webSite.index');
     Route::get('welcome', [SiteController::class, 'welcom'])->name('website.welcome');
     Route::get('sign-in', [LoginController::class, 'getSignin'])->name('Signin.customer');
@@ -30,33 +30,35 @@ use App\Models\Withdrawal;
     Route::post('sign-up', [LoginController::class, 'CustomerSignup'])->name('Signup');
     Route::post('sign-in', [LoginController::class, 'CustomerSignin'])->name('Signin');
     Route::post('CustomerLogout', [LoginController::class, 'CustomerLogout'])->name('logout.customer');
-    Route::middleware(['customer'])->prefix('customer')->group(function () {        
-        Route::get('works-user', [WorkController::class, 'index'])->name('webSite.work.index');
-        Route::get('facebook', [WorkController::class, 'facebook'])->name('facebook');
-        Route::post('faceStore', [WorkController::class, 'faceStore'])->name('faceStore');
-        Route::get('youtube', [WorkController::class, 'youtube'])->name('youtube');
-        Route::post('youtStore', [WorkController::class, 'youtStore'])->name('youtStore');
-        Route::post('executeTask/{id}', [WorkController::class, 'executeTask'])->name('executeTask');
-        // end dashboard
+    Route::middleware(['customer'])->prefix('customer')->group(function () {
+        Route::middleware(['check.subscription'])->group(function () {
+            Route::get('works-user', [WorkController::class, 'index'])->name('webSite.work.index');
+            Route::get('facebook', [WorkController::class, 'facebook'])->name('facebook');
+            Route::post('faceStore', [WorkController::class, 'faceStore'])->name('faceStore');
+            Route::get('youtube', [WorkController::class, 'youtube'])->name('youtube');
+            Route::post('youtStore', [WorkController::class, 'youtStore'])->name('youtStore');
+            Route::post('executeTask/{id}', [WorkController::class, 'executeTask'])->name('executeTask');
+            // end dashboard
+            
+            // Withdrawal
+            Route::get('withdrawal',[WithdrawalController::class, 'index'])->name('withdrawal.index');
+            Route::post('store',[WithdrawalController::class, 'store'])->name('store');
+            // End Withdrawal
 
+            // Profit
+            Route::get('profit',[ProfitController::class, 'index'])->name('profit.index');
+            // End Profit
+
+            // Help
+            Route::post('save-screen', [ScreenshotController::class, 'store'])->name('screenshot.store');
+            // End Help
+
+        });        
+        
         // Payment
         Route::get('subscription', [SubscriptionController::class, 'subscription'])->name('subscription');
         Route::post('store-subscription', [SubscriptionController::class, 'storeSubscription'])->name('storeSubscription');
         // End Payment
-
-        // Withdrawal
-        Route::get('withdrawal',[WithdrawalController::class, 'index'])->name('withdrawal.index');
-        Route::post('store',[WithdrawalController::class, 'store'])->name('store');
-        // End Withdrawal
-
-        // Profit
-        Route::get('profit',[ProfitController::class, 'index'])->name('profit.index');
-        // End Profit
-
-        // Help
-        Route::post('save-screen', [ScreenshotController::class, 'store'])->name('screenshot.store');
-        // End Help
-
         // Help
         Route::get('help', [HelpController::class, 'index'])->name('help.index');
         // End Help

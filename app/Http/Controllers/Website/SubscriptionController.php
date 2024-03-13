@@ -49,7 +49,7 @@ class SubscriptionController extends Controller
             'customer_id' => $customerId,
             'Subscription_End_Date' => $Subscription_End_Date,
         ]);
-        toastr()->success('تم بنجاح!');
+        toastr()->success('تم بنجاح!,برجاء انتظار تفعيل الاشتراك');
 
         return redirect()->route('webSite.index');
     }

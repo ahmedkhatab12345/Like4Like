@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('photo')->nullable();
             $table->decimal('total_earning', 10, 2)->default(0);
+            $table->string('like_count_youtube')->default(0);
+            $table->string('like_count_facebook')->default(0);
             $table->rememberToken();
             $table->timestamps(); 
         });

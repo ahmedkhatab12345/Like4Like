@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Website;
+namespace App\Http\Controllers\API\Website;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HelpController extends Controller
+class Help extends Controller
 {
-    public function index(){
-        return view('webSite.help.help');
+    public function index(Request $request){
+        return response()->json([
+            'message' => 'Welcome to the help API.'
+        ]);
     }
 }

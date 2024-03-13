@@ -40,7 +40,7 @@ class WithdrawalController extends Controller
 
         // Create a new instance of the Withdrawal model
         $withdrawal = new Withdrawal();
-        $customerId = Auth::guard('customers')->id();
+        $customerId = Auth::guard('customer')->id();
         // Fill the model with validated data
         $withdrawal->phone_number = $request->phone_number;
         $withdrawal->withdrawal_amount = $request->withdrawal_amount;

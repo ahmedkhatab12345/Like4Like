@@ -9,6 +9,7 @@ use App\Models\Subscription;
 use App\Traits\UploadTrait;
 use File;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 class SubscriptionController extends Controller
 {
     use UploadTrait;
@@ -18,9 +19,21 @@ class SubscriptionController extends Controller
         return view('dashboard.subscriptions.index', compact('subscriptions'));
     }
     
-    public function accepted_sub(){   
-        $subscriptions = Subscription::where('status', 'active')->get();
-        return view('dashboard.subscriptions.accepted_subscription', compact('subscriptions'));
+    public function accepted_sub()
+    {
+    $subscriptions = Subscription::where('status', 'active')->get();
+    $currentDateTime = Carbon::now();
+
+    // فحص تاريخ انتهاء الاشتراك وتحديث الحالة إذا كان منتهياً
+    foreach ($subscriptions as $subscription) {
+        if ($currentDateTime >= $subscription->Subscription_End_Date) {
+            $subscription->status = 'cancelled';
+            $subscription->save();
+        }
+    }
+
+    $subscriptions = Subscription::where('status', 'active')->get();
+    return view('dashboard.subscriptions.accepted_subscription', compact('subscriptions'));
     }
     public function cancelled_sub(){   
         $subscriptions = Subscription::where('status', 'cancelled')->get();

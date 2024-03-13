@@ -5,6 +5,7 @@
 <!-- start submit-->
 <div class="container  py-4">
     <div class="row my-4 py-3">
+        <h1 class="b-4">طلب سحب </h1>
         <form action="{{ route('store') }}" method="POST" class="mb-3" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
