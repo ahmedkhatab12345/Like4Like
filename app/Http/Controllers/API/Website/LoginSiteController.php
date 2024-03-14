@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -65,31 +66,47 @@ class LoginSiteController extends Controller
             'phone_number' => $request->phone_number,
             'password' => bcrypt($request->password),
         ]);
-
-        return response()->json(['message' => 'تم تسجيل العميل بنجاح'], 201);
+        $token =  $customer->createToken('AuthToken')->plainTextToken;
+        return response()->json(['message' => 'تم تسجيل العميل بنجاح','token' => $token], 201);
     }
 
+    // public function customerSignin(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'email' => 'required|email',
+    //         'password' => 'required',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 422);
+    //     }
+
+    //     if (Auth::attempt($request->only('email', 'password'))) {
+    //         $user = Auth::user();
+    //         $token = $user->createToken('AuthToken')->plainTextToken;
+    //         return response()->json(['token' => $token], 200);
+    //     } else {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+    // }
     public function customerSignin(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
-        ], [
-            'email.required' => 'حقل البريد الإلكتروني مطلوب',
-            'email.email' => 'البريد الإلكتروني غير صحيح',
-            'password.required' => 'حقل كلمة المرور مطلوب',
+            'password' => 'required|string|min:8',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $user = Customer::where('email', $request->input('email'))->first();
+        if ($user && Hash::check($request->input('password'),  $user->password)) {
 
-        if (Auth::guard('customer')->attempt($credentials)) {
-            toastr()->success('تم تسجيل الدخول بنجاح');
-
-            return response()->json(['message' => 'تم تسجيل الدخول بنجاح'], 200);
+            $token = $user->createToken('login token')->plainTextToken;
+            return response()->json(['token' => $token, $user], 200);
+        } else {
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
-
-        return response()->json(['error' => 'فشل تسجيل الدخول، يرجى التحقق من البريد الإلكتروني وكلمة المرور'], 401);
     }
+
+
 
     public function customerLogout()
     {

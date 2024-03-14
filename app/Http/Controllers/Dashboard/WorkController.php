@@ -80,7 +80,7 @@ class WorkController extends Controller
             toastr()->success('تم بنجاح');
             return redirect()->route('dashboard.index');
         } else {
-            return redirect()->route('dashboard.index')->with('error', 'يود مشكله في عمليه الحزف برجاء اعاده المحاوله ف وقت لاحق');
+            return redirect()->route('dashboard.index')->with('error', 'يوجد مشكله في عمليه الحذف برجاء اعاده المحاوله ف وقت لاحق');
         }
     }
 }

@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\API\Dashboard\SettingController;
+use App\Http\Controllers\API\Dashboard\SliderController;
 use App\Http\Controllers\API\ProfileController;
-use App\Http\Controllers\API\SubscriptionController;
-use App\Http\Controllers\API\UserController;
-use App\Http\Controllers\API\WithdrawalController;
-use App\Http\Controllers\API\WorkController;
+use App\Http\Controllers\API\Dashboard\SubscriptionController;
+use App\Http\Controllers\API\Dashboard\UserController;
+use App\Http\Controllers\API\Dashboard\WithdrawalController;
+use App\Http\Controllers\API\Dashboard\WorkController;
 use App\Http\Controllers\API\Website\LoginSiteController;
 use App\Http\Controllers\API\Website\ProfitSiteController;
 use App\Http\Controllers\API\Website\ScreenshotSiteController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\API\Website\WithdrawalSiteController;
 use App\Http\Controllers\API\Website\WorkSiteController;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*   
@@ -31,7 +34,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::middleware('auth:sanctum')->get('/customer', function (Request $request) {
-    return $request->user();
+    return Auth::guard('sanctum')->user();
 });
 //********************************dashboard Route********************************************//
 
@@ -62,9 +65,20 @@ Route::post('/works', [WorkController::class, 'store']);
 Route::put('/works/{id}',[WorkController::class, 'update']);
 Route::delete('/works/{id}',[WorkController::class, 'destroy']);
 
+//settings api's
+Route::get('/settings', [SettingController::class, 'index']);
+Route::put('/settings/update', [SettingController::class, 'update']);
+
+//sliders api's
+Route::get('/sliders', [SliderController::class, 'index']);
+Route::post('/sliders', [SliderController::class, 'store']);
+Route::put('/sliders/{id}', [SliderController::class, 'update']);
+Route::delete('/sliders/{id}', [SliderController::class, 'destroy']);
+
+
 ////////////////////////// WebSite API////////////////////////////////////////////////
     //Auth
-    Route::post('/getSignin', [LoginSiteController::class, 'getSignin']);
+    Route::get('/getSignin', [LoginSiteController::class, 'getSignin']);
     Route::post('/signin', [LoginSiteController::class, 'customerSignin']);
     Route::get('/signup', [LoginSiteController::class, 'getSignup']);
     Route::post('/signup', [LoginSiteController::class, 'customerSignup']);
@@ -79,7 +93,8 @@ Route::delete('/works/{id}',[WorkController::class, 'destroy']);
         Route::get('withdrawals', [WithdrawalSiteController::class, 'index']);
         Route::post('withdrawals', [WithdrawalSiteController::class, 'store']);
         //works
-        Route::get('works', [WorkSiteController::class, 'index']);
-        Route::get('facebook', [WorkSiteController::class, 'facebook']);
-        Route::get('youtube', [WorkSiteController::class, 'youtube']);
+        Route::get('getWorks', [WorkSiteController::class, 'index']);
+        Route::get('facebook', [WorkSiteController::class, 'getFacebookLinks']);
+        Route::get('youtube', [WorkSiteController::class, 'getYoutubeLinks']);
         Route::post('execute-task/{workId}', [WorkSiteController::class, 'executeTask']);
+

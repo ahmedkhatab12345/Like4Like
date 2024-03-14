@@ -25,7 +25,7 @@ class ScreenshotSiteController extends Controller
         }
 
         $file_name = $this->saveImage($request->photo, 'images/website/screenshots');
-        $customer = Customer::findOrFail(auth()->guard('customers')->id());
+        $customer = Customer::findOrFail(1);
         $customer->screenshots()->create([
             'photo' => $file_name,
         ]);
