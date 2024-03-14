@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 use Illuminate\Auth\Authenticatable as AuthenticableTrait;
+use Laravel\Sanctum\HasApiTokens;
+
 class Customer extends Model implements Authenticatable
 {
     use HasFactory;
     use AuthenticableTrait;
+    use HasApiTokens;
     protected $fillable = [
         'name',
         'email',

@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Website;
+namespace App\Http\Controllers\API\Website;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use App\Models\Subscription;
 use App\Models\Work;
-use App\Models\Setting;
 use Illuminate\Http\Request;
-class SiteController extends Controller
+use App\Traits\UploadTrait;
+use File;
+
+class SiteSiteController extends Controller
 {
+    use UploadTrait;
     public function index()
     {
-        $subscription = Subscription::all();
-        $settings = Setting::firstOrFail();
-        return view('webSite.index',compact('subscription','settings'));
+        return view('webSite.index');
     }
     
     public function welcom()

@@ -6,11 +6,11 @@
                 style="color: red;font-weight: bold;">4like</span></h1>
         <h4>تابعنا</h4>
         <div class="font-asm d-flex" style="margin-top: 40px">
-            <i class="fa-brands fa-twitter fa-lg " style="padding: 10px;"></i>
-            <i class="fa-brands fa-linkedin-in fa-lg ms-2" style="padding: 10px;"></i>
-            <i class="fa-brands fa-facebook fa-lg ms-2" style="padding: 10px;"></i>
-            <i class="fa-brands fa-instagram fa-lg ms-2 " style="padding: 10px;"></i>
-        </div>
+        <a href="{{$footerData->facebook}}"><i class="fa-brands fa-facebook fa-lg ms-2" style="padding: 10px;"></i></a>
+        <a href="{{$footerData->telegram}}"><i class="fa-brands fa-telegram fa-lg ms-2" style="padding: 10px;"></i></a>
+        <a href="{{$footerData->youtube}}"><i class="fa-brands fa-youtube fa-lg ms-2" style="padding: 10px;"></i></a>
+            
+        </div> 
     </section>
       <section class="col-md-4 col-12 align-self-center">
         <h1 style="font-family: Poppins;
@@ -19,28 +19,28 @@
         line-height: 36px;
         letter-spacing: 0em;
         text-align: left;
-        ">جهات الاتصال<</h1>
+        ">جهات الاتصال</h1>
         <p style="font-family: Poppins;
         font-size: 15px;
         font-weight: 400;
         line-height: 23px;
         letter-spacing: 0em;
         text-align: left;
-        ">العنوان: 4-5 الطريق الرئيسي، دلهي</p>
+        ">العنوان: {{$footerData->address}}</p>
         <p style="font-family: Poppins;
         font-size: 15px;
         font-weight: 400;
         line-height: 23px;
         letter-spacing: 0em;
         text-align: left;
-        ">  البريد الإلكتروني : educare@gmail.com</p>
+        ">  البريد الإلكتروني : {{$footerData->email}}</p>
         <p style="font-family: Poppins; 
         font-size: 15px;
         font-weight: 400;
         line-height: 23px;
         letter-spacing: 0em;
         text-align: left;
-        ">  رقم الهاتف : +٩١ ٤٥٣٣٤٣٣٢٦٥</p>
+        ">  رقم الهاتف : {{$footerData->phone}}</p>
       </section>
     </div>
   </footer>

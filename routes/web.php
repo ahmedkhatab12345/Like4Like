@@ -38,7 +38,9 @@ use App\Models\Withdrawal;
             Route::get('youtube', [WorkController::class, 'youtube'])->name('youtube');
             Route::post('youtStore', [WorkController::class, 'youtStore'])->name('youtStore');
             Route::post('executeTask/{id}', [WorkController::class, 'executeTask'])->name('executeTask');
-            // end dashboard
+            //Route::post('executeTaskYoutube/{id}', [WorkController::class, 'executeTaskYoutube'])->name('execute.task.youtube');
+
+            // end dashboard  executeTaskYoutube   executeTaskFacebook
             
             // Withdrawal
             Route::get('withdrawal',[WithdrawalController::class, 'index'])->name('withdrawal.index');

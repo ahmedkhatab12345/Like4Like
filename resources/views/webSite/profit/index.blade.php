@@ -28,7 +28,7 @@
                     style="background-image: linear-gradient(to right, #f05f22, #e53f52);">
                     <div class="to-pro d-flex justify-content-between p-3">
                         <p>الرصيد الإجمالي</p>
-                        <p>$٤,١٥٦.٤٥{{ App\Models\Withdrawal::calculateTotalEarnings() }}</p>
+                        <p></p>
                     </div>
                     <div class="to-pro d-flex justify-content-between p-3">
                         <p>عدد المهام</p>

@@ -8,8 +8,9 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\SubscriptionController; 
 use App\Http\Controllers\Dashboard\EarningController; 
 use App\Http\Controllers\Dashboard\WithdrawalController;
+use App\Http\Controllers\Dashboard\SettingController;
 
-/*
+/*   
 |--------------------------------------------------------------------------
 | Web Routes 
 |--------------------------------------------------------------------------
@@ -48,6 +49,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/accepted-withdrawals', [WithdrawalController::class, 'accepted_withdrawals'])->name('accepted.withdrawals');
     Route::get('admin/rejected-withdrawals', [WithdrawalController::class, 'rejected_withdrawals'])->name('rejected.withdrawals');
     Route::post('admin/withdrawals/{withdrawalId}/{status}', [WithdrawalController::class, 'updateStatus']);
+
+    //Start Route Of Setting
+    Route::get('admin/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::post('admin/settings', [SettingController::class, 'update'])->name('settings.update');
+
+
 });
 
 Route::middleware('auth')->group(function () {

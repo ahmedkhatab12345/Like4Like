@@ -11,7 +11,7 @@
                 <div class="subscription-info" style="text-align: center;margin-top: 30px;">
                     <h1 class="subscription-heading" style="color: red;font-size: 24px;font-weight: bold;margin-bottom: 10px;">للاشتراك في الباقة السنوية</h1>
                     <p class="subscription-text" style="font-size: 18px;">
-                        يُرجى تحويل مبلغ <span class="amount" style="color: blue;font-weight: bold;">1500 جنيه</span> على الرقم التالي: <span class="phone-number" style="color: blue;font-weight: bold;">01000000000</span>،
+                        يُرجى تحويل مبلغ <span class="amount" style="color: blue;font-weight: bold;">{{$settings->subscription_fee}}</span> على الرقم التالي: <span class="phone-number" style="color: blue;font-weight: bold;">{{$settings->deposit_phone}}</span>،
 
                     </p>
                 </div>

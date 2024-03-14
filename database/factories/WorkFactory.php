@@ -23,7 +23,6 @@ class WorkFactory extends Factory
     {
         return [
             'description' => $this->faker->text,
-            'photo' => $this->faker->imageUrl(),
             'link' => $this->faker->unique()->url,
             'type' => $this->faker->randomElement(['facebook', 'youtube']),
             'status' => $this->faker->randomElement(['0', '1']),
