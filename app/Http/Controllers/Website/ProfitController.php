@@ -10,7 +10,8 @@ class ProfitController extends Controller
 {
     public function index()
     {
-        $customers = Customer::all();
-        return view('webSite.profit.index');
+        $customerId = auth('customer')->id();
+        $withdrawals = Customer::findOrFail($customerId);
+        return view('webSite.profit.index',compact('withdrawals'));
     }
 }

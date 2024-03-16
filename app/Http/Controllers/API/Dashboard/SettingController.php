@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API\Website;
+namespace App\Http\Controllers\API\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\User;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,26 +12,16 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\PersonalAccessToken;
 
-class LoginSiteController extends Controller
+class LoginController extends Controller
 {
-    use UploadTrait;
-    /**
-     * Display a listing of the resource.
-     */
-    public function getSignin(Request $request)
-    {
-        $customer = Customer::all();
-        return response()->json(compact('customer'));
-    }
 
 
-    public function customerSignup(Request $request)
+    public function signup(Request $request)
     {
         // Validation rules
         $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:customers',
-            'phone_number' => 'required|string|max:20|unique:customers|regex:/^[0-9]{10,20}$/',
             'password' => 'required|string|min:8',
         ];
 
@@ -40,9 +31,6 @@ class LoginSiteController extends Controller
             'email.required' => 'حقل البريد الإلكتروني مطلوب',
             'email.email' => 'البريد الإلكتروني غير صحيح',
             'email.unique' => 'البريد الإلكتروني موجود مسبقاً',
-            'phone_number.required' => 'حقل رقم الهاتف مطلوب',
-            'phone_number.regex' => 'رقم الهاتف غير صحيح',
-            'phone_number.unique' => 'رقم الهاتف موجود مسبقاً',
             'password.required' => 'حقل كلمة المرور مطلوب',
             'password.min' => 'يجب أن تتكون كلمة المرور من الأقل 8 أحرف',
         ];
@@ -56,27 +44,22 @@ class LoginSiteController extends Controller
         }
 
         // Proceed with saving data if validation passes
-        $customer = Customer::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone_number' => $request->phone_number,
-            'password' => bcrypt($request->password),
-        ]);
-        $token =  $customer->createToken('customer token')->plainTextToken;
+        $customer = User::create($request->all());
+        $token =  $customer->createToken('user token')->plainTextToken;
         return response()->json(['message' => 'تم تسجيل العميل بنجاح','token' => $token], 201);
     }
 
-    public function customerSignin(Request $request)
+    public function signin(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|string|min:8',
         ]);
 
-        $user = Customer::where('email', $request->input('email'))->first();
+        $user = User::where('email', $request->input('email'))->first();
         if ($user && Hash::check($request->input('password'),  $user->password)) {
 
-            $token = $user->createToken('login customer token')->plainTextToken;
+            $token = $user->createToken('user token')->plainTextToken;
             return response()->json(['token' => $token, $user], 200);
         } else {
             return response()->json(['message' => 'Invalid credentials'], 401);
@@ -85,7 +68,7 @@ class LoginSiteController extends Controller
 
 
 
-    public function customerLogout($token=null)
+    public function logout($token=null)
     {
         $user = Auth::guard('sanctum')->user();
         if ($token == null) {
@@ -97,7 +80,7 @@ class LoginSiteController extends Controller
             $PersonalAccessToken->delete();
             return response()->json(['message' => 'Access token revoked successfully']);
         }
-        Auth::guard('customer')->logout();
+        Auth::guard('web')->logout();
 
         return response()->json(['message' => 'Invalid token'], 401);
 

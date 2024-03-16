@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\SubscriptionController;
 use App\Http\Controllers\Dashboard\EarningController; 
 use App\Http\Controllers\Dashboard\WithdrawalController;
 use App\Http\Controllers\Dashboard\SettingController;
+use App\Http\Controllers\Dashboard\SliderController;
 
 /*   
 |--------------------------------------------------------------------------
@@ -54,7 +55,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('admin/settings', [SettingController::class, 'update'])->name('settings.update');
 
-
+    //Start Route Of Sliders
+    Route::get('admin/sliders', [SliderController::class, 'index'])->name('sliders.index');
+    Route::get('sliders/create', [SliderController::class, 'create'])->name('sliders.create');
+    Route::post('sliders/store', [SliderController::class, 'store'])->name('sliders.store');
+    Route::get('sliders/edit/{id}', [SliderController::class, 'edit'])->name('sliders.edit');
+    Route::put('sliders/update/{id}', [SliderController::class, 'update'])->name('sliders.update');
+    Route::delete('sliders/delete/{id}', [SliderController::class, 'destroy'])->name('sliders.destroy');
 });
 
 Route::middleware('auth')->group(function () {

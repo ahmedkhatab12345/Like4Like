@@ -10,21 +10,17 @@
   /* تحديد الارتفاع المطلوب لصور عنصر التمرير */
   .carousel-item img {
     height: 500px; /* تعيين الارتفاع المطلوب هنا بالبكسل */
-    object-fit: cover; /* ضمان استمرارية نسب الصورة */
+    object-fit: contain; /* ضبط عرض وارتفاع الصورة لتناسب حاويتها دون تغيير نسبة الأبعاد */
   }
 </style>
 
 <div id="carouselExampleControls" class="carousel slide container" data-ride="carousel" data-interval="5000"> <!-- تعيين مدة عرض كل صورة إلى 5 ثواني -->
   <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="w-100" src="{{url('/')}}/website/assets/work/facebook.jfif" alt="First slide">
-    </div>
-    <div class="carousel-item">
-      <img class="w-100" src="{{url('/')}}/website/assets/work/youtube.jfif" alt="Second slide">
-    </div>
-    <div class="carousel-item">
-      <img class="w-100" src="{{url('/')}}/website/assets/work/facebook.jfif" alt="Third slide">
-    </div>
+    @foreach($sliders as $slider)
+      <div class="carousel-item @if ($loop->first) active @endif">
+        <img class="w-100" src="{{ asset('images/dashboard/sliders/'.$slider->photo) }}" alt="Slider Image">
+      </div>
+    @endforeach
   </div>
   <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -35,6 +31,4 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-
-
 @endsection
