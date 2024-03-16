@@ -72,13 +72,13 @@ class WorkSiteController extends Controller
             $file_name = $this->saveImage($request->file('photo'), 'images/website/screenshots');
         }
     
-        $customer = Customer::findOrFail(auth()->guard('customer')->id());
+        $customer = Customer::findOrFail(auth()->guard('sanctum')->id());
         $MyWork= new Customer_work();
-        $MyWork->customer_id = auth()->guard('customer')->id();
+        $MyWork->customer_id = auth()->guard('sanctum')->id();
         $MyWork->type=1;
         $MyWork->work_id = $workId;
         $MyWork->save();
-        $customer = Customer::findOrFail(auth()->guard('customer')->id());
+        $customer = Customer::findOrFail(auth()->guard('sanctum')->id());
         $links = Work::findOrFail($workId); // assuming you retrieve the $links object from somewhere
         $likeCountField = $links->type === 'facebook' ? 'like_count_facebook' : 'like_count_youtube';
         $customer->update([

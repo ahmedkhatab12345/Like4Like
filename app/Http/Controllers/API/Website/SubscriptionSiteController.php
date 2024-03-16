@@ -39,7 +39,7 @@ class SubscriptionSiteController extends Controller
         ];
 
         $method = $validatedData['method'];
-        $customerId = auth()->guard('customer')->id();
+        $customerId = auth()->guard('sanctum')->id();
         $currentDateTime = Carbon::now();
         $Subscription_End_Date = $currentDateTime->addYear();
         $subscriptions = Subscription::create([

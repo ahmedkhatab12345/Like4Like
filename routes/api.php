@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Dashboard\LoginController;
 use App\Http\Controllers\API\Dashboard\SettingController;
 use App\Http\Controllers\API\Dashboard\SliderController;
 use App\Http\Controllers\API\ProfileController;
@@ -31,12 +32,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return Auth::guard('sanctum')->user();
 });
 Route::middleware('auth:sanctum')->get('/customer', function (Request $request) {
     return Auth::guard('sanctum')->user();
 });
 //********************************dashboard Route********************************************//
+//user login api's
+Route::post('/userSignin', [LoginController::class, 'signin']);
+Route::post('/userSignup', [LoginController::class, 'signup']);
+Route::post('/userLogout/{token?}', [LoginController::class, 'logout']);
 
 //users api's
 Route::apiResource('users', UserController::class);
@@ -77,12 +82,11 @@ Route::delete('/sliders/{id}', [SliderController::class, 'destroy']);
 
 
 ////////////////////////// WebSite API////////////////////////////////////////////////
-    //Auth
+    //customer login api's
     Route::get('/getSignin', [LoginSiteController::class, 'getSignin']);
     Route::post('/signin', [LoginSiteController::class, 'customerSignin']);
-    Route::get('/signup', [LoginSiteController::class, 'getSignup']);
     Route::post('/signup', [LoginSiteController::class, 'customerSignup']);
-    Route::post('/logout', [LoginSiteController::class, 'customerLogout']);
+    Route::post('/logout/{token?}', [LoginSiteController::class, 'customerLogout']);
 
         Route::get('profit', [ProfitSiteController::class, 'index']);
         //screenshot
