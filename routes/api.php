@@ -1,12 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-use App\Http\Controllers\API\ProfileController;
-use App\Http\Controllers\API\SubscriptionController;
-use App\Http\Controllers\API\UserController;
-use App\Http\Controllers\API\WithdrawalController;
-use App\Http\Controllers\API\WorkController;
-=======
 use App\Http\Controllers\API\Dashboard\LoginController;
 use App\Http\Controllers\API\Dashboard\SettingController;
 use App\Http\Controllers\API\Dashboard\SliderController;
@@ -22,7 +15,6 @@ use App\Http\Controllers\API\Website\SubscriptionSiteController;
 use App\Http\Controllers\API\Website\WithdrawalSiteController;
 use App\Http\Controllers\API\Website\WorkSiteController;
 
->>>>>>> master
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -42,9 +34,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return Auth::guard('sanctum')->user();
 });
-<<<<<<< HEAD
-
-=======
 Route::middleware('auth:sanctum')->get('/customer', function (Request $request) {
     return Auth::guard('sanctum')->user();
 });
@@ -53,17 +42,12 @@ Route::middleware('auth:sanctum')->get('/customer', function (Request $request) 
 Route::post('/userSignin', [LoginController::class, 'signin']);
 Route::post('/userSignup', [LoginController::class, 'signup']);
 Route::post('/userLogout/{token?}', [LoginController::class, 'logout']);
->>>>>>> master
 
 //users api's
 Route::apiResource('users', UserController::class);
 
 //profile api's
-<<<<<<< HEAD
-Route::get('users_profile', [ProfileController::class, 'get_Profile']);
-=======
 // Route::get('users_profile', [ProfileController::class, 'get_Profile']);
->>>>>>> master
 
 //subscriptions api's
 Route::get('subscriptions', [SubscriptionController::class,'index']);
@@ -85,8 +69,6 @@ Route::get('works/youtube', [WorkController::class, 'getYoutubeLinks']);
 Route::post('/works', [WorkController::class, 'store']);
 Route::put('/works/{id}',[WorkController::class, 'update']);
 Route::delete('/works/{id}',[WorkController::class, 'destroy']);
-<<<<<<< HEAD
-=======
 
 //settings api's
 Route::get('/settings', [SettingController::class, 'index']);
@@ -120,4 +102,3 @@ Route::delete('/sliders/{id}', [SliderController::class, 'destroy']);
         Route::get('youtube', [WorkSiteController::class, 'getYoutubeLinks']);
         Route::post('execute-task/{workId}', [WorkSiteController::class, 'executeTask']);
 
->>>>>>> master
