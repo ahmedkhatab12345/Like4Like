@@ -11,7 +11,6 @@ use App\Models\Screenshot;
 use App\Models\Customer_work;
 use App\Traits\UploadTrait;
 use Illuminate\Support\Facades\Validator;
-
 class WorkController extends Controller
 {
     use UploadTrait;
@@ -67,6 +66,18 @@ class WorkController extends Controller
     public function executeTask(Request $request, $workId)
     {
         try {
+            $validator = Validator::make($request->all(), [
+                'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+
+            ], [
+                'photo.required' => 'حقل مطلوب',
+                'photo.image' => ' يجب ادخال صوره صحيحه ',
+
+
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
             if ($request->hasFile('photo')) {
                 $file_name = $this->saveImage($request->file('photo'), 'images/website/screenshots');
             }
@@ -88,7 +99,6 @@ class WorkController extends Controller
                 $likeCountField => ($customer->$likeCountField += 1),
                 'total_earning' => ($customer->total_earning + 1),
             ]);
-    
             $customer->screenshots()->create([
                 'photo' => $file_name,
             ]);

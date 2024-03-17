@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\WorkRequest;
 use App\Models\Work;
 use App\Models\Customer;
-use App\Models\Screenshot; 
+use App\Models\Screenshot;
+use App\Models\Subscription; 
 use File;
 use Illuminate\Support\Facades\Storage;
 class WorkController extends Controller
@@ -89,6 +90,7 @@ class WorkController extends Controller
     public function review(){
         $screenshots = Screenshot::all();
         $customers = Customer::all();
-        return view('dashboard.works.review',compact('screenshots','customers'));
+        $subscription =Subscription:: all();
+        return view('dashboard.works.review',compact('screenshots','customers','subscription'));
     }
 }
