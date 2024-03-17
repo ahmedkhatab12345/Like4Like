@@ -2,6 +2,17 @@
 
 @section('content') 
     <div class="container-fluid">
+        <!-- Search Form -->
+        <div class="row mb-3">
+            <div class="col-md-6 offset-md-3">
+                <form action="{{ route('subscriptions.search') }}" method="GET" class="ml-auto">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search" placeholder="ابحث عن اسم العميل...">
+                        <button type="submit" class="btn btn-primary">بحث</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="card">
@@ -9,6 +20,7 @@
                         <h3 class="mb-0 text-center">الاشتراكات </h3>
                     </div>
                     <div class="card-body">
+                        <!-- Subscription Cards -->
                         @if($subscriptions->count() > 0)
                             <div class="row row-cols-1 row-cols-md-3 g-4">
                                 @foreach($subscriptions as $subscription)
@@ -29,7 +41,6 @@
                                             <!-- Add your update form or any other actions here -->
                                             <div class="card-footer bg-light text-center"> <!-- توسيط العناصر بالمنتصف -->
                                                 <button type="button" class="btn btn-danger btn-lg confirm-subscription-btn" data-subscription-id="{{ $subscription->id }}">إلغاء الاشتراك</button>
-                                                
                                             </div>
                                         </div>
                                     </div>
@@ -50,13 +61,11 @@
     $('.confirm-subscription-btn').on('click', function () {
         var subscriptionId = $(this).data('subscription-id');
         var status = 'cancelled'; // تعيين الحالة الجديدة "active"
-
         updateSubscriptionStatus(subscriptionId, status);
     });
 
     function updateSubscriptionStatus(subscriptionId, status) {
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
-
         $.ajax({
             method: 'POST',
             url: '/subscriptions/' + subscriptionId + '/' + status,
@@ -66,9 +75,7 @@
             },
             success: function (response) {
                 console.log(response.message);
-
                 $('#success-toast').toast('show');
-
                 location.reload();
             },
             error: function (error) {
@@ -78,4 +85,3 @@
     }
 </script>
 @endsection
-

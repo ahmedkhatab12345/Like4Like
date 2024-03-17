@@ -54,6 +54,7 @@ Route::get('subscriptions', [SubscriptionController::class,'index']);
 Route::get('subscriptions/accepted', [SubscriptionController::class,'accepted_sub']);
 Route::get('subscriptions/cancelled', [SubscriptionController::class,'cancelled_sub']);
 Route::put('subscriptions/{subscriptionId}/status/{status}', [SubscriptionController::class,'updateStatus']);
+Route::get('subscriptions/search', [SubscriptionController::class, 'search']);
 
 
 //withdrawals api's
@@ -69,6 +70,7 @@ Route::get('works/youtube', [WorkController::class, 'getYoutubeLinks']);
 Route::post('/works', [WorkController::class, 'store']);
 Route::put('/works/{id}',[WorkController::class, 'update']);
 Route::delete('/works/{id}',[WorkController::class, 'destroy']);
+Route::get('works-rewiew', [WorkController::class, 'review']);
 
 //settings api's
 Route::get('/settings', [SettingController::class, 'index']);
@@ -101,4 +103,3 @@ Route::delete('/sliders/{id}', [SliderController::class, 'destroy']);
         Route::get('facebook', [WorkSiteController::class, 'getFacebookLinks']);
         Route::get('youtube', [WorkSiteController::class, 'getYoutubeLinks']);
         Route::post('execute-task/{workId}', [WorkSiteController::class, 'executeTask']);
-

@@ -12,11 +12,11 @@
                     style="background-image: linear-gradient(to right, #f05f22, #e53f52);">
                     <div class="to-pro d-flex justify-content-between p-3">
                         <p>أرباح اليوم</p>
-                        <p>$١٠٦.٤٥</p>
+                        <p>{{$daily_profit_count}}</p>
                     </div>
                     <div class="to-pro d-flex justify-content-between p-3">
-                        <p>عدد المهام</p>
-                        <p>٨</p>
+                        <p>عدد المهام اليوميه</p>
+                        <p>{{$daily_profit_count}}</p>
                     </div>
                 </div>
                 <!-- End today profits-->
@@ -28,11 +28,11 @@
                     style="background-image: linear-gradient(to right, #f05f22, #e53f52);">
                     <div class="to-pro d-flex justify-content-between p-3">
                         <p>الرصيد الإجمالي</p>
-                        <p></p>
+                        <p>{{$withdrawals->total_earning}}</p>
                     </div>
                     <div class="to-pro d-flex justify-content-between p-3">
                         <p>عدد المهام</p>
-                        <p>٤٠</p>
+                        <p>{{($withdrawals->like_count_youtube)+($withdrawals->like_count_facebook)}}</p>
                     </div>
                 </div>
                 <!-- End today profits-->

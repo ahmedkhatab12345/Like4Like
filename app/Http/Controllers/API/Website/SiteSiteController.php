@@ -23,8 +23,4 @@ class SiteSiteController extends Controller
         return view('webSite.welcom');
     }
 
-    
-
-    
-
 }

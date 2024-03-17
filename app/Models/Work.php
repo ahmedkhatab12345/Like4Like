@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Work extends Model
 {
     use HasFactory;
-    protected $fillable = ['description', 'photo', 'link', 'type', 'status'];
+    protected $fillable = ['description', 'link', 'type'];
 
 
     public function customer(){

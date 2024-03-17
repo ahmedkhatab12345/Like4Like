@@ -33,12 +33,34 @@ class WithdrawalController extends Controller
         $withdrawal = Withdrawal::find($withdrawalId);
 
         if (!$withdrawal) {
-            abort(404, 'withdrawal not found');
+            abort(404, 'Withdrawal not found');
         }
 
-        $withdrawal->status = $status;
-        $withdrawal->save();
-        return response()->json(['message' => 'withdrawal status updated successfully']);
+        if ($status === 'accept') {
+            // تحديث حالة السحب
+            $withdrawal->status = $status;
+            $withdrawal->save();
+
+            // خصم قيمة السحب من رصيد العميل
+            $customer = $withdrawal->customer;
+            if ($customer) {
+                $customer->total_earning -= $withdrawal->withdrawal_amount;
+                $customer->save();
+            }
+
+            toastr()->success('تم الموافقة على عملية السحب بنجاح');
+            return response()->json(['message' => 'Withdrawal accepted successfully']);
+        } elseif ($status === 'rejected') {
+            // تحديث حالة السحب فقط في حالة الرفض
+            $withdrawal->status = $status;
+            $withdrawal->save();
+
+            toastr()->info('تم رفض عملية السحب');
+            return response()->json(['message' => 'Withdrawal rejected']);
+        } else {
+            // في حالة القيمة غير المتوقعة لحالة السحب
+            abort(400, 'Invalid status');
+        }
     }
     
 }

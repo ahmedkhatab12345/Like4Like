@@ -29,16 +29,39 @@ class SubscriptionController extends Controller
 
     public function updateStatus($subscriptionId, $status)
     {
-        $subscription = Subscription::find($subscriptionId);
+    $subscription = Subscription::find($subscriptionId);
 
-        if (!$subscription) {
-            return response()->json(['error' => 'Subscription not found'], 404);
-        }
-
-        $subscription->status = $status;
-        $subscription->save();
-        return response()->json(['message' => 'Subscription status updated successfully']);
+    if (!$subscription) {
+        abort(404, 'Subscription not found');
     }
 
+    $previousStatus = $subscription->status;
+    $subscription->status = $status;
+    $subscription->save();
+
+    // إذا تم تغيير الحالة إلى "active" وكانت الحالة السابقة غير "active"
+    if ($status === 'active' && $previousStatus !== 'active') {
+        // تحديث القيمة في جدول Customer
+        $customer = $subscription->customer;
+        if ($customer) {
+            $customer->increment('total_earning', 5);
+        }
+    }
+
+    toastr()->success('تم بنجاح');
+    return response()->json(['message' => 'Subscription status updated successfully']);
+    }
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+        
+        // Perform search query
+        $subscriptions = Subscription::whereHas('customer', function ($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        })->get();
+
+        return response()->json(compact('subscriptions'));
+
+    }
     
 }

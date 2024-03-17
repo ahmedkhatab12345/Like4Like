@@ -12,15 +12,15 @@
                         @csrf
                         <div class="form-group">
                             <label for="address">العنوان</label>
-                            <input type="text" name="address" class="form-control" value="{{$settings->address}}">
+                            <input type="text" name="address" class="form-control" value="{{ isset($settings->address) ? $settings->address : '' }}">
                         </div>
                         <div class="form-group">
                             <label for="email">البريد الإلكتروني</label>
-                            <input type="email" name="email" class="form-control" value="{{$settings->email}}">
+                            <input type="email" name="email" class="form-control" value="{{ isset($settings->email) ? $settings->email : '' }}">
                         </div>
                         <div class="form-group">
                             <label for="phone">رقم الهاتف</label>
-                            <input type="text" name="phone" class="form-control" value="{{$settings->phone}}">
+                            <input type="text" name="phone" class="form-control" value="{{ isset($settings->phone) ? $settings->phone : '' }}">
                         </div>
                         <button type="submit" class="btn btn-primary m-3">حفظ</button>
                     </form>
@@ -35,15 +35,15 @@
                         @csrf
                         <div class="form-group">
                             <label for="facebook">رابط فيس بوك</label>
-                            <input type="text" name="facebook" class="form-control" value="{{$settings->facebook}}">
+                            <input type="text" name="facebook" class="form-control" value="{{ isset($settings->facebook) ? $settings->facebook : '' }}">
                         </div>
                         <div class="form-group">
                             <label for="twitter">رابط يوتيوب</label>
-                            <input type="text" name="twitter" class="form-control" value="{{$settings->twitter}}">
+                            <input type="text" name="twitter" class="form-control" value="{{ isset($settings->twitter) ? $settings->twitter : '' }}">
                         </div>
                         <div class="form-group">
                             <label for="telegram">رابط تليجرام</label>
-                            <input type="text" name="telegram" class="form-control" value="{{$settings->telegram}}">
+                            <input type="text" name="telegram" class="form-control" value="{{ isset($settings->telegram) ? $settings->telegram : '' }}">
                         </div>
                         <button type="submit" class="btn btn-primary m-3">حفظ</button>
                     </form>
@@ -63,7 +63,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="about_us">نبذة عنا</label>
-                            <textarea name="about_us" class="form-control" rows="5">{{$settings->about_us}}</textarea>
+                            <textarea name="about_us" class="form-control" rows="5">{{ isset($settings->about_us) ? $settings->about_us : '' }}</textarea>
                         </div>
                         <button type="submit" class="btn btn-primary m-3">حفظ</button>
                     </form>
@@ -78,11 +78,11 @@
                         @csrf
                         <div class="form-group">
                             <label for="deposit_phone">رقم هاتف الإيداع</label>
-                            <input type="text" name="deposit_phone" class="form-control" value="{{$settings->deposit_phone}}">
+                            <input type="text" name="deposit_phone" class="form-control" value="{{ isset($settings->deposit_phone) ? $settings->deposit_phone : '' }}">
                         </div>
                         <div class="form-group">
                             <label for="subscription_fee">قيمة الاشتراك</label>
-                            <input type="text" name="subscription_fee" class="form-control" value="{{$settings->subscription_fee}}">
+                            <input type="text" name="subscription_fee" class="form-control" value="{{ isset($settings->subscription_fee) ? $settings->subscription_fee : '' }}">
                         </div>
                         <button type="submit" class="btn btn-primary m-3">حفظ</button>
                     </form>

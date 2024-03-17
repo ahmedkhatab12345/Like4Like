@@ -39,6 +39,8 @@
 <li><a class="ms-link" href="{{route('works.create')}}">اضافه عمل جديد</a></li>
 <li><a class="ms-link" href="{{route('facebook.links')}}"> روابط فيس بوك </a></li>
 <li><a class="ms-link" href="{{route('youtube.links')}}"> روابط يوتيوب </a></li>
+<li><a class="ms-link" href="{{route('works.review')}}"> متابعه العمل </a></li>
+
 
 </ul>
 </li>
@@ -113,15 +115,21 @@
 
 </li>
 @endcan
-<li>
-<li>
-<a class="m-link" href="{{route('settings.index')}}">
+<li class="collapsed">
+<a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu_employees" href="#">
 <svg width="18" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 <path d="M7.97188 0C3.58125 0 0 3.58125 0 8C0 12.4187 3.58125 16 8 16C12.4188 16 15.9719 12.4187 15.9719 8.02812C15.9719 3.6375 12.4188 0 7.97188 0ZM13.0188 11.2781L10.35 11.2376L9.56406 13.7873C9.06563 13.9219 8.54375 14 8 14C7.45625 14 6.93469 13.9212 6.43469 13.7857L5.65 11.2375L2.98125 11.278C2.415 10.4137 2.07031 9.39459 2.01625 8.29959L4.19687 6.7625L3.33125 4.2375C3.9925 3.41844 4.86531 2.78094 5.86438 2.39875L8 4L10.1341 2.39937C11.1334 2.78156 12.0059 3.41937 12.6672 4.23812L11.8031 6.7625L13.9838 8.29688C13.9313 9.39375 13.5875 10.4125 13.0188 11.2781Z" />
 <path class="fill-secondary" d="M6.49692 9.99999L5.53442 7.14374L8.00005 5.37811L10.4382 7.14436L9.51255 9.99999H6.49692Z" />
 </svg>
-<span class="ms-2">الاعدادات العامه</span>
+<span class="ms-2"> الاعدادات العامه</span>
+<span class="arrow fa fa-angle-right ms-auto text-end"></span>
 </a>
+
+<ul class="sub-menu collapse" id="menu_employees">
+<li><a class="ms-link" href="{{route('settings.index')}}">اعدادات وسائل التواصل </a></li>
+<li><a class="ms-link" href="{{route('sliders.index')}}">اعدادات الاسليدر</a></li>
+
+</ul>
 </li>
 <a class="m-link" href="{{route('website.welcome')}}">
 <span class="ms-2">زياره الموقع</span>

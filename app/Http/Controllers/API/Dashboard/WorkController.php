@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
+use App\Models\Screenshot;
 use App\Models\Work;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
@@ -115,5 +117,12 @@ class WorkController extends Controller
             return response()->json(['error' => 'An error occurred while deleting the work', 'message' => $e->getMessage()], 500);
         }
     
+    }
+
+    public function review(){
+        $screenshots = Screenshot::all();
+        $customers = Customer::all();
+        return response()->json($screenshots,$customers);
+
     }
 }
