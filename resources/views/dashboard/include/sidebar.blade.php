@@ -39,6 +39,8 @@
 <li><a class="ms-link" href="{{route('works.create')}}">اضافه عمل جديد</a></li>
 <li><a class="ms-link" href="{{route('facebook.links')}}"> روابط فيس بوك </a></li>
 <li><a class="ms-link" href="{{route('youtube.links')}}"> روابط يوتيوب </a></li>
+<li><a class="ms-link" href="{{route('works.review')}}"> متابعه العمل </a></li>
+
 
 </ul>
 </li>

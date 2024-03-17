@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\SliderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Website\LoginController;
@@ -66,6 +67,13 @@ use App\Models\Withdrawal;
         // End Help
     });
 
+    //Start Route Of Sliders
+    Route::get('admin/sliders', [SliderController::class, 'index'])->name('sliders.index');
+    Route::get('sliders/create', [SliderController::class, 'create'])->name('sliders.create');
+    Route::post('sliders/store', [SliderController::class, 'store'])->name('sliders.store');
+    Route::get('sliders/edit/{id}', [SliderController::class, 'edit'])->name('sliders.edit');
+    Route::put('sliders/update/{id}', [SliderController::class, 'update'])->name('sliders.update');
+    Route::delete('sliders/delete/{id}', [SliderController::class, 'destroy'])->name('sliders.destroy');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

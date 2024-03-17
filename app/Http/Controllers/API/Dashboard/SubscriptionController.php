@@ -39,6 +39,17 @@ class SubscriptionController extends Controller
         $subscription->save();
         return response()->json(['message' => 'Subscription status updated successfully']);
     }
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+        
+        // Perform search query
+        $subscriptions = Subscription::whereHas('customer', function ($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        })->get();
 
+        return response()->json(compact('subscriptions'));
+
+    }
     
 }

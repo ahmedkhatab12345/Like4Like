@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('admin/works', WorkController::class);
     Route::get('admin/links-facebook', [WorkController::class, 'getfacebooklinks'])->name('facebook.links');
     Route::get('admin/links-youtube', [WorkController::class, 'getyoutubelinks'])->name('youtube.links');
+    Route::get('admin/works-rewiew', [WorkController::class, 'review'])->name('works.review');
     //End Route Of works
     
     //Start Route Of subscriptions
@@ -39,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/accepted-subscription', [SubscriptionController::class, 'accepted_sub'])->name('accepted.subscription');
     Route::get('admin/cancelled-subscription', [SubscriptionController::class, 'cancelled_sub'])->name('cancelled.subscription');
     Route::post('subscriptions/{subscriptionId}/{status}', [SubscriptionController::class, 'updateStatus']);
+    Route::get('/subscriptions/search', [SubscriptionController::class, 'search'])->name('subscriptions.search');
+
     //End Route Of subscriptions
 
     //Start Route Of earnings
@@ -49,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/withdrawals', [WithdrawalController::class, 'index'])->name('withdrawals.index');
     Route::get('admin/accepted-withdrawals', [WithdrawalController::class, 'accepted_withdrawals'])->name('accepted.withdrawals');
     Route::get('admin/rejected-withdrawals', [WithdrawalController::class, 'rejected_withdrawals'])->name('rejected.withdrawals');
-    Route::post('admin/withdrawals/{withdrawalId}/{status}', [WithdrawalController::class, 'updateStatus']);
+    Route::post('withdrawals/{withdrawalId}/{status}', [WithdrawalController::class, 'updateStatus']);
 
     //Start Route Of Setting
     Route::get('admin/settings', [SettingController::class, 'index'])->name('settings.index');

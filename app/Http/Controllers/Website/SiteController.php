@@ -13,9 +13,10 @@ class SiteController extends Controller
 {
     public function index()
     {
-        $subscription = Subscription::all();
         $sliders = Slider::all();
         $settings = Setting::firstOrFail();
+        $customerId = auth('customer')->id();
+        $subscription = Subscription::where('customer_id', $customerId)->firstOrFail();
         return view('webSite.index',compact('subscription','settings','sliders'));
     }
     

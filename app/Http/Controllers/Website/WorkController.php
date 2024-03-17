@@ -66,30 +66,43 @@ class WorkController extends Controller
 
     public function executeTask(Request $request, $workId)
     {
-        if ($request->hasFile('photo')) {
-            $file_name = $this->saveImage($request->file('photo'), 'images/website/screenshots');
+        try {
+            if ($request->hasFile('photo')) {
+                $file_name = $this->saveImage($request->file('photo'), 'images/website/screenshots');
+            }
+        
+            $customer = Customer::findOrFail(auth()->guard('customer')->id());
+            $MyWork= new Customer_work();
+            $MyWork->customer_id = auth()->guard('customer')->id();
+            $MyWork->type=1;
+            $MyWork->work_id = $workId;
+            $MyWork->save();
+    
+            $customer = Customer::findOrFail(auth()->guard('customer')->id());
+            $links = Work::findOrFail($workId);
+            $likeCountField = $links->type === 'facebook' ? 'like_count_facebook' : 'like_count_youtube';
+            $customer->update([
+                'like_count_facebook'=>($customer->like_count_facebook+1),
+                'like_count_youtube'=>($customer->like_count_youtube+1),
+                'total_earning'=> ($customer->total_earning+1),
+                $likeCountField => ($customer->$likeCountField += 1),
+                'total_earning' => ($customer->total_earning + 1),
+            ]);
+    
+            $customer->screenshots()->create([
+                'photo' => $file_name,
+            ]);
+    
+            // Update the status of the work
+            $work = Work::findOrFail($workId);
+            $work->status = '1';
+            $work->save();
+    
+            return redirect()->back()->with('success', 'تم تنفيذ المهمة بنجاح.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'حدث خطأ أثناء تنفيذ المهمة.');
         }
-    
-        $customer = Customer::findOrFail(auth()->guard('customer')->id());
-        $MyWork= new Customer_work();
-        $MyWork->customer_id = auth()->guard('customer')->id();
-        $MyWork->type=1;
-        $MyWork->work_id = $workId;
-        $MyWork->save();
-        $customer = Customer::findOrFail(auth()->guard('customer')->id());
-        $links = Work::findOrFail($workId); // assuming you retrieve the $links object from somewhere
-        $likeCountField = $links->type === 'facebook' ? 'like_count_facebook' : 'like_count_youtube';
-        $customer->update([
-            $likeCountField => ($customer->$likeCountField += 1),
-            'total_earning' => ($customer->total_earning + 1)
-        ]);
-
-        $customer->screenshots()->create([
-            'photo' => $file_name,
-        ]);
-
-        return redirect()->back()->with('success', 'تم تنفيذ المهمة بنجاح.');
-}
-    
+    }
+     
 
 }

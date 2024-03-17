@@ -116,4 +116,11 @@ class WorkController extends Controller
         }
     
     }
+
+    public function review(){
+        $screenshots = Screenshot::all();
+        $customers = Customer::all();
+        return response()->json($screenshots,$customers);
+
+    }
 }

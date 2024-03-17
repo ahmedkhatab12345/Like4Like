@@ -17,7 +17,7 @@
             </div>
             <div class="mb-3">
                 <input type="text" name="withdrawal_amount" class="form-control w-50 "
-                    value="{{ old('withdrawal_amount') }}" placeholder="المبلغ : اقل مبلغ للسحب 50ج " />
+                    value="{{ old('withdrawal_amount') }}" placeholder="المبلغ : اقل مبلغ للسحب 20ج " />
                 @error('withdrawal_amount')
                 <div class="w-50 alert alert-danger">{{ $message }}</div>
                 @enderror
