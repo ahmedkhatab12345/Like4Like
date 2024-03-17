@@ -8,8 +8,9 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\SubscriptionController; 
 use App\Http\Controllers\Dashboard\EarningController; 
 use App\Http\Controllers\Dashboard\WithdrawalController;
+use App\Http\Controllers\Dashboard\SettingController;
 
-/*
+/*   
 |--------------------------------------------------------------------------
 | Web Routes 
 |--------------------------------------------------------------------------
@@ -20,24 +21,23 @@ use App\Http\Controllers\Dashboard\WithdrawalController;
 */
 
 Route::middleware(['auth'])->group(function () {
-    
+    Route::post('adminLogout', [DashboardController::class, 'AdminLogout'])->name('logout.admin');
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-
     //Start Route Of Menu
-    Route::resource('users', UserController::class);
+    Route::resource('admin/users', UserController::class);
     //End Route Of Menu
 
     //Start Route Of Works
-    Route::resource('works', WorkController::class);
-    Route::get('links-facebook', [WorkController::class, 'getfacebooklinks'])->name('facebook.links');
-    Route::get('links-youtube', [WorkController::class, 'getyoutubelinks'])->name('youtube.links');
+    Route::resource('admin/works', WorkController::class);
+    Route::get('admin/links-facebook', [WorkController::class, 'getfacebooklinks'])->name('facebook.links');
+    Route::get('admin/links-youtube', [WorkController::class, 'getyoutubelinks'])->name('youtube.links');
     //End Route Of works
     
     //Start Route Of subscriptions
-    Route::resource('subscriptions', SubscriptionController::class);
-    Route::get('accepted-subscription', [SubscriptionController::class, 'accepted_sub'])->name('accepted.subscription');
-    Route::get('cancelled-subscription', [SubscriptionController::class, 'cancelled_sub'])->name('cancelled.subscription');
-    Route::post('/subscriptions/{subscriptionId}/{status}', [SubscriptionController::class, 'updateStatus']);
+    Route::resource('admin/subscriptions', SubscriptionController::class);
+    Route::get('admin/accepted-subscription', [SubscriptionController::class, 'accepted_sub'])->name('accepted.subscription');
+    Route::get('admin/cancelled-subscription', [SubscriptionController::class, 'cancelled_sub'])->name('cancelled.subscription');
+    Route::post('subscriptions/{subscriptionId}/{status}', [SubscriptionController::class, 'updateStatus']);
     //End Route Of subscriptions
 
     //Start Route Of earnings
@@ -45,10 +45,15 @@ Route::middleware(['auth'])->group(function () {
     //End Route Of earnings
 
     //Start Route Of withdrawals 
-    Route::get('withdrawals', [WithdrawalController::class, 'index'])->name('withdrawals.index');
-    Route::get('accepted-withdrawals', [WithdrawalController::class, 'accepted_withdrawals'])->name('accepted.withdrawals');
-    Route::get('rejected-withdrawals', [WithdrawalController::class, 'rejected_withdrawals'])->name('rejected.withdrawals');
-    Route::post('/withdrawals/{withdrawalId}/{status}', [WithdrawalController::class, 'updateStatus']);
+    Route::get('admin/withdrawals', [WithdrawalController::class, 'index'])->name('withdrawals.index');
+    Route::get('admin/accepted-withdrawals', [WithdrawalController::class, 'accepted_withdrawals'])->name('accepted.withdrawals');
+    Route::get('admin/rejected-withdrawals', [WithdrawalController::class, 'rejected_withdrawals'])->name('rejected.withdrawals');
+    Route::post('admin/withdrawals/{withdrawalId}/{status}', [WithdrawalController::class, 'updateStatus']);
+
+    //Start Route Of Setting
+    Route::get('admin/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::post('admin/settings', [SettingController::class, 'update'])->name('settings.update');
+
 
 });
 

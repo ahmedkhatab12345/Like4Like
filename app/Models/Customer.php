@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 use Illuminate\Auth\Authenticatable as AuthenticableTrait;
+use Laravel\Sanctum\HasApiTokens;
+
 class Customer extends Model implements Authenticatable
 {
     use HasFactory;
     use AuthenticableTrait;
+    use HasApiTokens;
     protected $fillable = [
         'name',
         'email',
@@ -18,6 +21,7 @@ class Customer extends Model implements Authenticatable
         'password',
         'photo', 
         'total_earning',
+        'like_count_day'
     ];
     
     public function subscriptions()
@@ -34,7 +38,7 @@ class Customer extends Model implements Authenticatable
         return $this->hasMany(Screenshot::class);
     }
 
-    public function work(): BelongsToMany
+    public function work()
     {
         return $this->belongsToMany(Work::class);
     }

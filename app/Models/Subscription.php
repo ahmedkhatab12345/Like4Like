@@ -14,6 +14,7 @@ class Subscription extends Model
     'status',
     'method',
     'customer_id',
+    'Subscription_End_Date',
     ];
 
     public function customer()

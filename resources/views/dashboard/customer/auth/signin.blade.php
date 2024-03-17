@@ -59,6 +59,7 @@
         >
     
         <form method="POST" action="{{route('Signin')}}"  class="py-5 my-4 text-center  rounded shadow form w-50 ">
+            <h1 class="h3 mb-4 ">تسجيل دخول </h1>     
             @csrf    
             <input name="email" type="text" placeholder="Email" class="form-control my-2 w-75 mx-auto">
             @error('email')

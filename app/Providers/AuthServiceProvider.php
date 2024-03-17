@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
-// use Illuminate\Support\Facades\Gate;
 use App\Models\Subscription;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -37,15 +36,19 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role == 'super_admin';
         });
 
-        Gate::define('viewSubscription-admin', function ($user) {
+        Gate::define('viewWithdralls-admin', function ($user) {
             return $user->role == 'super_admin';
         });
 
-        Gate::define('active-customer', function ($customerId) {
-            $subscription = Subscription::where('customer_id', $customerId)
-                                          ->where('status', 'active')
-                                          ->first();
-            return $subscription !== null;
+        Gate::define('viewSubscription-customer', function ($user) {
+            $subscriptions = Subscription::where('customer_id', $user->id)->get();
+            foreach ($subscriptions as $subscription) {
+                if ($subscription->status == 'active') {
+                    return true;
+                }
+            }
+            return false;
         });
+
     }
 }

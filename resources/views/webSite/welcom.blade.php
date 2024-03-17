@@ -41,11 +41,6 @@
     </nav>
   <!-- End Header -->
   
-  <!-- Start Landing Page -->
-  <div class="landing-parent px-4">
-    <div class="landing-img"></div>
-  </div>
-  <!-- End Landing Page -->
   <!-- start Profits-->
   <div class="profits container py-3">
     <div class="row">

@@ -5,14 +5,14 @@
     <div class="my-5 row">
         @foreach($facebookLinks as $link)
         <div class="my-3 col-md-6 col-12">
-            <form action="{{ route('executeTask', ['id' => $link->id]) }}" method="POST" class="mb-3">
+            <form action="{{ route('executeTask', $link->id )}}" method="POST" class="mb-3" enctype="multipart/form-data">
                 @csrf
                 <div class="w-100 form p-3 px-4 shadow mx-auto">
                     <img src="{{url('/')}}/website/assets/work/facebook.jfif" class="my-2" style="width: 50px;" alt="card image">
                     <div class="my-3">
-                        <a href="{{$link->url}}" target="_blank" class="btn btn-primary">اضغط على الرابط</a>
+                        <a href="{{$link->link}}" target="_blank" class="btn btn-primary">اضغط على الرابط</a>
                         <label for="photo" class="my-2" style="font-size: 20px; font-weight: 500"></label>
-                        <input type="file" class="form-control w-75" style="font-size: 16px; font-weight: 500" name="photo">
+                        <input type="file" name="photo" class="form-control w-75" style="font-size: 16px; font-weight: 500" >
                         @error('photo')
                         <div class="w-75 alert alert-danger">{{ $message }}</div>
                         @enderror

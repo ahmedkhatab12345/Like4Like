@@ -49,16 +49,6 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="mb-3 col-4">
-                                    <label for="photo" class="form-label text-primary">الصوره</label>
-                                    <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
-                                    @error('photo')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                
                             </div>
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-success">اضف عمل </button>

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->string('link')->unique();
             $table->enum('type', ['facebook', 'youtube']);
             $table->enum('status', ['0', '1'])->default('0');
+            // $table->date('date_for_day')->default(Carbon::now()->toDateString());       
             $table->timestamps();
         });
     }

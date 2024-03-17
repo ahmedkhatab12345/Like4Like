@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Website;
-
 use Illuminate\Support\Carbon;
-
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\Work;
 use App\Models\Link;
@@ -17,39 +16,80 @@ class WorkController extends Controller
 {
     use UploadTrait;
 
-    public function index(){
+    public function index()
+    {
         $works = Work::all();
-        return view('webSite.work.index',compact('works'));
+        return view('webSite.work.index', compact('works'));
     }
 
     public function facebook()
     {
         
-        $facebookLinks = Work::where('type', 'facebook')->where('status', '0')->take(5)->get();
-
-        foreach ($facebookLinks as $link) {
-        $link->status = '1'; 
-        $link->save();
-        $today = Carbon::today()->toDateString();
-        $mylink = Customer_work::where('customer_id', auth()->user()->id)
-            ->whereDate('updated_at', $today)
-            ->count();
-        
-        if ($mylink > 0) {
-            $mylink -= 1; 
-        }
+        $customer = Customer::find(auth()->guard('customer')->id());
+        $todayDate=Carbon::today()->toDateString();
+        $myWork = Customer_work::where('type',1)->whereDate('created_at','=', $todayDate)->where('customer_id', auth()->guard('customer')->id())->pluck('work_id')->values()->all();
+        // dd($myWork );
+        if(count($myWork)> 0){
+        $facebookLinks = Work::where(function ($query) use ($myWork) {
+            foreach ($myWork as $key => $value) {
+                $query->whereNotIn('id', [$value]);
+            }
+        })->where('status','0')->where('type','facebook')->take(10 - $customer->like_count_facebook)->get();
+        // dd($facebookLinks);
+    }else{
+        $facebookLinks = Work::where('status','0')->where('type','facebook')->take(10)->get();
     }
 
-        return view('website.work.facebook', compact('facebookLinks', 'mylink'));
+    
+        return view('website.work.facebook', compact('facebookLinks'));
+    }
 
+    public function youtube()
+    {
+          
+        $customer = Customer::find(auth()->guard('customer')->id());
+        $todayDate=Carbon::today()->toDateString();
+        $myWork = Customer_work::where('type',1)->whereDate('created_at','=', $todayDate)->where('customer_id', auth()->guard('customer')->id())->pluck('work_id')->values()->all();
+        // dd($myWork );
+        if(count($myWork)> 0){
+        $youtubeLinks = Work::where(function ($query) use ($myWork) {
+            foreach ($myWork as $key => $value) {
+                $query->whereNotIn('id', [$value]);
+            }
+        })->where('status','0')->where('type','youtube')->take(10 - $customer->like_count_youtube)->get();
+        // dd($youtubeLinks);fac
+        }else{
+            $youtubeLinks = Work::where('status','0')->where('type','youtube')->take(10)->get();
+        }
+        return view('website.work.youtube', compact('youtubeLinks'));
     }
 
     public function executeTask(Request $request, $workId)
     {
-        $customer = auth('customers')->user();
-        $customer->work()->updateExistingPivot($workId, ['status' => 1]);
+        if ($request->hasFile('photo')) {
+            $file_name = $this->saveImage($request->file('photo'), 'images/website/screenshots');
+        }
+    
+        $customer = Customer::findOrFail(auth()->guard('customer')->id());
+        $MyWork= new Customer_work();
+        $MyWork->customer_id = auth()->guard('customer')->id();
+        $MyWork->type=1;
+        $MyWork->work_id = $workId;
+        $MyWork->save();
+        $customer = Customer::findOrFail(auth()->guard('customer')->id());
+        $links = Work::findOrFail($workId); // assuming you retrieve the $links object from somewhere
+        $likeCountField = $links->type === 'facebook' ? 'like_count_facebook' : 'like_count_youtube';
+        $customer->update([
+            $likeCountField => ($customer->$likeCountField += 1),
+            'total_earning' => ($customer->total_earning + 1)
+        ]);
+
+        $customer->screenshots()->create([
+            'photo' => $file_name,
+        ]);
 
         return redirect()->back()->with('success', 'تم تنفيذ المهمة بنجاح.');
-    }
+}
     
+
 }

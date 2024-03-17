@@ -11,6 +11,7 @@ class Customer_work extends Model
     protected $fillable = [
         'customer_id',
         'work_id',
+        'type',
     ];
     
     

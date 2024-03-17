@@ -19,7 +19,6 @@ class WorkRequest extends FormRequest
     {
         return [
         'description' => 'required|string|max:255',
-        'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         'link' => 'required|url|unique:works,link',
         ];
     }
@@ -30,10 +29,6 @@ class WorkRequest extends FormRequest
         'description.required' => 'حقل الوصف مطلوب',
         'description.string' => 'يجب أن يكون الوصف نصيًا',
         'description.max' => 'الوصف يجب ألا يتجاوز 255 حرفًا',
-        'photo.required' => 'حقل الصورة مطلوب',
-        'photo.image' => 'يجب أن يكون الملف المرفق صورة',
-        'photo.mimes' => 'يجب أن تكون الصورة من نوع jpeg، png، jpg، أو gif',
-        'photo.max' => 'حجم الصورة يجب ألا يتجاوز 2 ميغابايت',
         'link.required' => 'حقل الرابط مطلوب',
         'link.url' => 'يجب أن يكون الرابط صالحًا',
         'link.unique' => 'الرابط موجود مسبقًا',
