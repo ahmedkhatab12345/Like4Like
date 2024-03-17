@@ -65,11 +65,19 @@ class UserController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => $request->role,
-        ]);
+        if ($request->hasFile('photo')) {
+
+            // Save the new image
+            $file_name = $this->saveImage($request->photo, 'images/dashboard/admins');
+
+            // Update the movie with the new image
+            $user->update([
+                'photo' => $file_name
+            ]);
+        }
+
+        // Update other data
+        $user->update($request->except('photo'));
 
         return response()->json(['message' => 'User updated successfully']);
     } catch (\Exception $e) {

@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
@@ -21,7 +21,7 @@ class ProfileController extends Controller
     public function profileUpdate(UserRequest $request){
 
         try {
-            $users=User::Find(Auth::user()->id);
+            $users=User::Find(auth()->guard('sanctum')->id());
 
             if (!$users) {
                 return response()->json(['error' => 'User not found'], 404);
@@ -39,10 +39,7 @@ class ProfileController extends Controller
             }
 
             // Update other data
-            $users->update([
-                'title' => $request->title,
-                'description' => $request->description,
-            ]);
+            $users->update($request->except('photo'));
             return response()->json(['message' => 'Profile updated successfully']);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error updating Data: ' . $e->getMessage()], 500);

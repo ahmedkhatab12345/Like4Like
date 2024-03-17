@@ -39,17 +39,11 @@ class WorkController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-             // حفظ الصورة
-             $file_name = $this->saveImage($request->photo, 'images/dashboard/works');
-
-             $worksData = $request->only(['description', 'link', 'type']);
- 
+        try { 
              $work = Work::create([
-                 'description' => $worksData['description'],
-                 'link' => $worksData['link'],
-                 'photo' => $file_name,
-                 'type' => $worksData['type'], // إضافة النوع هنا
+                 'description' =>$request->description,
+                 'link' => $request->link,
+                 'type' => $request->type, // إضافة النوع هنا
              ]);
             return response()->json(['message' => 'Work added successfully', 'work' => $work], 201);
         } catch (\Exception $e) {
@@ -72,25 +66,12 @@ class WorkController extends Controller
     {
         try {
             $work = Work::findOrFail($id);
-    
-            // Check if a new photo is uploaded
-            if ($request->hasFile('photo')) {
-                // Save new photo
-                $file_name = $this->saveImage($request->photo, 'images/dashboard/works');
-    
-                // Delete old photo if exists
-                if ($work->photo) {
-                    Storage::delete('images/dashboard/works/' . $work->photo);
-                }
-            } else {
-                $file_name = $work->photo; // Keep the existing photo
-            }
-    
+              
             // Update work with new photo, description, and link
             $work->update([
                 'description' => $request->description,
                 'link' => $request->link, // Update the link
-                'photo' => $file_name,
+                'type' => $request->type, // Update the type
             ]);
             return response()->json(['message' => 'Work updated successfully', 'work' => $work], 200);
         } catch (\Exception $e) {

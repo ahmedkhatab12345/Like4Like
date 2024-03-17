@@ -25,8 +25,6 @@ class WorkFactory extends Factory
             'description' => $this->faker->text,
             'link' => $this->faker->unique()->url,
             'type' => $this->faker->randomElement(['facebook', 'youtube']),
-            'status' => $this->faker->randomElement(['0', '1']),
-            'photo' => 'photo'
         ];
     }
 }

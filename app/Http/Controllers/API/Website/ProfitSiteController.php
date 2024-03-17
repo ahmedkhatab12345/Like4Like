@@ -11,10 +11,14 @@ class ProfitSiteController extends Controller
 {
     public function index()
     {
-        $customerId = auth('customer')->id();
+        $customerId = auth('sanctum')->id();
         $withdrawals = Customer::findOrFail($customerId);
         $today = Carbon::today();
         $daily_profit_count = Customer_work::where('customer_id',$customerId)->whereDate('updated_at', $today)->count();        
-        return response()->json($withdrawals,$daily_profit_count);
+        return response()->json([
+            'withdrawals' => $withdrawals,
+            'daily_profit_count' => $daily_profit_count
+        ]); 
+    
     }
 }

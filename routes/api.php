@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\API\Dashboard\LoginController;
+use App\Http\Controllers\API\Dashboard\ProfileController;
 use App\Http\Controllers\API\Dashboard\SettingController;
 use App\Http\Controllers\API\Dashboard\SliderController;
-use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\Dashboard\SubscriptionController;
 use App\Http\Controllers\API\Dashboard\UserController;
 use App\Http\Controllers\API\Dashboard\WithdrawalController;
@@ -42,6 +42,11 @@ Route::middleware('auth:sanctum')->get('/customer', function (Request $request) 
 Route::post('/userSignin', [LoginController::class, 'signin']);
 Route::post('/userSignup', [LoginController::class, 'signup']);
 Route::post('/userLogout/{token?}', [LoginController::class, 'logout']);
+//profile api's
+Route::get('/profile', [ProfileController::class, 'get_Profile']);
+// Route to update profile
+Route::post('profile/update', [ProfileController::class, 'profileUpdate']);
+
 
 //users api's
 Route::apiResource('users', UserController::class);
@@ -100,6 +105,6 @@ Route::delete('/sliders/{id}', [SliderController::class, 'destroy']);
         Route::post('withdrawals', [WithdrawalSiteController::class, 'store']);
         //works
         Route::get('getWorks', [WorkSiteController::class, 'index']);
-        Route::get('facebook', [WorkSiteController::class, 'getFacebookLinks']);
-        Route::get('youtube', [WorkSiteController::class, 'getYoutubeLinks']);
+        Route::get('facebook', [WorkSiteController::class, 'facebook']);
+        Route::get('youtube', [WorkSiteController::class, 'youtube']);
         Route::post('execute-task/{workId}', [WorkSiteController::class, 'executeTask']);

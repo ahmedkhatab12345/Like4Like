@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('description');
             $table->string('link')->unique();
             $table->enum('type', ['facebook', 'youtube']);
-            // $table->date('date_for_day')->default(Carbon::now()->toDateString());       
             $table->timestamps();
         });
     }

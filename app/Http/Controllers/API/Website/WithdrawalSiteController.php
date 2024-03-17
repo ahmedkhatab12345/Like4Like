@@ -22,7 +22,7 @@ class WithdrawalSiteController extends Controller
 
     public function store(Request $request)
     {
-        $customerId = auth('customer')->id();
+        $customerId = Auth::guard('sanctum')->id();
         $customer = Customer::findOrFail($customerId);
         $total_earning = $customer->total_earning;
         // Validate the form data
@@ -43,26 +43,13 @@ class WithdrawalSiteController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-<<<<<<< HEAD
-        // Create a new instance of the Withdrawal model
-        $withdrawal = new Withdrawal();
-        // Fill the model with validated data
-        $withdrawal->phone_number = $request->phone_number;
-        $withdrawal->withdrawal_amount = $request->withdrawal_amount;
-        $withdrawal->methoud = $request->methoud;
-        $withdrawal->customer_id = auth()->guard('sanctum')->id();
-=======
         if ($validator->passes()) {
             // التحقق من أن السحب لا يتجاوز الأرباح
             if ($request->withdrawal_amount > $total_earning) {
-                return redirect()->back();
                 return response()->json(['message' => 'sorry withdrawl_amount less than total_earning'], 422);
->>>>>>> 8a070723f8854a5b83c38242c34f61bdbe93e61c
-
             }
             // Create a new instance of the Withdrawal model
             $withdrawal = new Withdrawal();
-            $customerId = Auth::guard('customer')->id();
             // Fill the model with validated data
             $withdrawal->phone_number = $request->phone_number;
             $withdrawal->withdrawal_amount = $request->withdrawal_amount;

@@ -28,16 +28,20 @@ class WorkSiteController extends Controller
         $customer = Customer::find(auth()->guard('customer')->id());
         $todayDate=Carbon::today()->toDateString();
         $myWork = Customer_work::where('type',1)->whereDate('created_at','=', $todayDate)->where('customer_id', auth()->guard('customer')->id())->pluck('work_id')->values()->all();
+        // dd($myWork );
         if(count($myWork)> 0){
         $facebookLinks = Work::where(function ($query) use ($myWork) {
             foreach ($myWork as $key => $value) {
                 $query->whereNotIn('id', [$value]);
             }
-        })->where('status','0')->where('type','facebook')->take(10 - $customer->like_count_facebook)->get();
+        })->where('type','facebook')->take(10 - $customer->like_count_facebook)->get();
+        // dd($facebookLinks);
     }else{
-        $facebookLinks = Work::where('status','0')->where('type','facebook')->take(10)->get();
+        $facebookLinks = Work::where('type','facebook')->take(10)->get();
     }
-    return response()->json($facebookLinks);
+
+    
+    return response()->json(['facebookLinks' => $facebookLinks]);
 }
 
     public function youtube()
@@ -52,46 +56,60 @@ class WorkSiteController extends Controller
             foreach ($myWork as $key => $value) {
                 $query->whereNotIn('id', [$value]);
             }
-        })->where('status','0')->where('type','youtube')->take(10 - $customer->like_count_youtube)->get();
+        })->where('type','youtube')->take(10 - $customer->like_count_youtube)->get();
         // dd($youtubeLinks);fac
         }else{
-            $youtubeLinks = Work::where('status','0')->where('type','youtube')->take(10)->get();
+            $youtubeLinks = Work::where('type','youtube')->take(10)->get();
         }
-        return response()->json($youtubeLinks);
+        return response()->json(['youtubeLinks' => $youtubeLinks]);
     }
 
     public function executeTask(Request $request, $workId)
     {
-        $validator = Validator::make($request->all(), [
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        if ($request->hasFile('photo')) {
-            $file_name = $this->saveImage($request->file('photo'), 'images/website/screenshots');
-        }
-    
-        $customer = Customer::findOrFail(auth()->guard('sanctum')->id());
-        $MyWork= new Customer_work();
-        $MyWork->customer_id = auth()->guard('sanctum')->id();
-        $MyWork->type=1;
-        $MyWork->work_id = $workId;
-        $MyWork->save();
-        $customer = Customer::findOrFail(auth()->guard('sanctum')->id());
-        $links = Work::findOrFail($workId); // assuming you retrieve the $links object from somewhere
-        $likeCountField = $links->type === 'facebook' ? 'like_count_facebook' : 'like_count_youtube';
-        $customer->update([
-            $likeCountField => ($customer->$likeCountField += 1),
-            'total_earning' => ($customer->total_earning + 1)
-        ]);
+        try {
+            $validator = Validator::make($request->all(), [
+                'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
 
-        $customer->screenshots()->create([
-            'photo' => $file_name,
-        ]);
+            ], [
+                'photo.required' => 'حقل مطلوب',
+                'photo.image' => ' يجب ادخال صوره صحيحه ',
 
-        return response()->json(['message' => 'Task executed successfully.'], 200);
-}
+
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            if ($request->hasFile('photo')) {
+                $file_name = $this->saveImage($request->file('photo'), 'images/website/screenshots');
+            }
+        
+            $customer = Customer::findOrFail(auth()->guard('sanctum')->id());
+            $MyWork= new Customer_work();
+            $MyWork->customer_id = auth()->guard('sanctum')->id();
+            $MyWork->type=1;
+            $MyWork->work_id = $workId;
+            $MyWork->save();
     
+            $customer = Customer::findOrFail(auth()->guard('sanctum')->id());
+            $links = Work::findOrFail($workId);
+            $likeCountField = $links->type === 'facebook' ? 'like_count_facebook' : 'like_count_youtube';
+            $customer->update([
+                'like_count_facebook'=>($customer->like_count_facebook+1),
+                'like_count_youtube'=>($customer->like_count_youtube+1),
+                'total_earning'=> ($customer->total_earning+1),
+                $likeCountField => ($customer->$likeCountField += 1),
+                'total_earning' => ($customer->total_earning + 1),
+            ]);
+            $customer->screenshots()->create([
+                'photo' => $file_name,
+            ]);
+    
+    
+            return response()->json(['message' => 'Task executed successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while executing the task', 'message' => $e->getMessage()], 500);
+        }
+    }
+
 
 }
