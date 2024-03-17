@@ -9,6 +9,7 @@ class SettingController extends Controller
 {
     public function index()
     {
+    //return view('dashboard.users.create');
     $settings = Setting::firstOrFail(); 
     return view('dashboard.setting.index', compact('settings'));
     }

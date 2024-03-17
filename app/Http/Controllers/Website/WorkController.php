@@ -34,10 +34,10 @@ class WorkController extends Controller
             foreach ($myWork as $key => $value) {
                 $query->whereNotIn('id', [$value]);
             }
-        })->where('status','0')->where('type','facebook')->take(10 - $customer->like_count_facebook)->get();
+        })->where('type','facebook')->take(10 - $customer->like_count_facebook)->get();
         // dd($facebookLinks);
     }else{
-        $facebookLinks = Work::where('status','0')->where('type','facebook')->take(10)->get();
+        $facebookLinks = Work::where('type','facebook')->take(10)->get();
     }
 
     
@@ -56,7 +56,7 @@ class WorkController extends Controller
             foreach ($myWork as $key => $value) {
                 $query->whereNotIn('id', [$value]);
             }
-        })->where('status','0')->where('type','youtube')->take(10 - $customer->like_count_youtube)->get();
+        })->where('type','youtube')->take(10 - $customer->like_count_youtube)->get();
         // dd($youtubeLinks);fac
         }else{
             $youtubeLinks = Work::where('status','0')->where('type','youtube')->take(10)->get();
@@ -93,10 +93,6 @@ class WorkController extends Controller
                 'photo' => $file_name,
             ]);
     
-            // Update the status of the work
-            $work = Work::findOrFail($workId);
-            $work->status = '1';
-            $work->save();
     
             return redirect()->back()->with('success', 'تم تنفيذ المهمة بنجاح.');
         } catch (\Exception $e) {
