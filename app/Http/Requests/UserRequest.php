@@ -25,7 +25,6 @@ class UserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'password' => 'required|string|min:8',
-            // 'password' => 'required|string|min:8|confirmed',
             'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
@@ -38,7 +37,6 @@ class UserRequest extends FormRequest
             'email.email' => 'البريد الإلكتروني يجب أن يكون عنوان بريد صحيح',
             'password.required' => 'حقل كلمة المرور مطلوب',
             'password.min' => 'يجب أن تكون كلمة المرور على الأقل 8 أحرف',
-            'password.confirmed' => 'تأكيد كلمة المرور غير متطابق',
             'photo.image' => 'يجب أن يكون الملف المحدد صورة',
             'photo.mimes' => 'يجب أن تكون الصورة من نوع: jpeg، png، jpg، gif',
             'photo.max' => 'يجب ألا يتجاوز حجم الصورة 2 ميجا بايت',

@@ -40,10 +40,6 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="password_confirmation" class="form-label text-primary">تأكيد الرقم السري</label>
-                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="تأكيد الرقم السري" required>
-                            </div>
-                            <div class="mb-3">
                                 <label for="photo" class="form-label text-primary">الصوره</label>
                                 <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
                                 @error('photo')

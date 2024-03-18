@@ -58,7 +58,7 @@ class WorkController extends Controller
         })->where('type','youtube')->take(10 - $customer->like_count_youtube)->get();
         // dd($youtubeLinks);fac
         }else{
-            $youtubeLinks = Work::where('status','0')->where('type','youtube')->take(10)->get();
+            $youtubeLinks = Work::where('type','youtube')->take(10)->get();
         }
         return view('website.work.youtube', compact('youtubeLinks'));
     }
