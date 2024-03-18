@@ -23,16 +23,16 @@ use App\Models\Withdrawal;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/   
-    Route::get('customer-index', [SiteController::class, 'index'])->name('webSite.index');
-    Route::get('welcome', [SiteController::class, 'welcom'])->name('website.welcome');
-    Route::get('sign-in', [LoginController::class, 'getSignin'])->name('Signin.customer');
-    Route::get('sign-up', [LoginController::class, 'getSignup'])->name('Signup.customer');
+*/  
+    Route::get('/', [SiteController::class, 'welcom'])->name('website.welcome');
+    Route::get('customer/login', [LoginController::class, 'getSignin'])->name('Signin.customer');
+    Route::get('customer/register', [LoginController::class, 'getSignup'])->name('Signup.customer');
     Route::post('sign-up', [LoginController::class, 'CustomerSignup'])->name('Signup');
     Route::post('sign-in', [LoginController::class, 'CustomerSignin'])->name('Signin');
     Route::post('CustomerLogout', [LoginController::class, 'CustomerLogout'])->name('logout.customer');
     Route::middleware(['customer'])->prefix('customer')->group(function () {
         Route::middleware(['check.subscription'])->group(function () {
+            Route::get('index', [SiteController::class, 'index'])->name('webSite.index');
             Route::get('works-user', [WorkController::class, 'index'])->name('webSite.work.index');
             Route::get('facebook', [WorkController::class, 'facebook'])->name('facebook');
             Route::post('faceStore', [WorkController::class, 'faceStore'])->name('faceStore');

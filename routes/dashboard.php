@@ -23,7 +23,7 @@ use App\Http\Controllers\Dashboard\SliderController;
 
 Route::middleware(['auth'])->group(function () {
     Route::post('adminLogout', [DashboardController::class, 'AdminLogout'])->name('logout.admin');
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/admin/index', [DashboardController::class, 'index'])->name('dashboard.index');
     //Start Route Of Menu
     Route::resource('admin/users', UserController::class);
     //End Route Of Menu
